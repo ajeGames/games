@@ -50,7 +50,7 @@ public class Picnic {
 
   public void addPlayer(String playerName) {
     print("Adding player " + playerName + ".");
-    players.add(Player.createPlayer(playerName));
+    players.add(new Player(playerName));
   }
 
   private void play() {
@@ -85,15 +85,15 @@ public class Picnic {
 
     } else if (selectedItem instanceof Nuisance) {
       Nuisance aProblem = (Nuisance) selectedItem;
-      if (!currentPlayer.hasPrevention(aProblem)) {
+      if (!currentPlayer.getBasket().hasPrevention(aProblem)) {
         print("==X Do something dastardly to " + currentPlayer.getName() + " due to " + aProblem.getValue());
 
         if (aProblem.isAgainstItem()) {
-          currentPlayer.removeItem(aProblem.getWorksAgainst());
+          currentPlayer.getBasket().removeItem(aProblem.getWorksAgainst());
         } else if (aProblem.isAgainstItemType()) {
-          currentPlayer.removeItemOfType(aProblem.getWorksAgainstType());
+          currentPlayer.getBasket().removeItemOfType(aProblem.getWorksAgainstType());
         } else if (aProblem.isWipeOut()) {
-          currentPlayer.removeAllItems();
+          currentPlayer.getBasket().empty();
         }
       } else {
         print("==O Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
@@ -102,9 +102,9 @@ public class Picnic {
     print("* " + currentPlayer.toString());
 
     // decide if winner
-    if (currentPlayer.getFoodCount() >= REQUIRED_FOOD_COUNT
-            && currentPlayer.getDrinkCount() >= REQUIRED_DRINK_COUNT
-            && currentPlayer.getUtensilCount() >= REQUIRED_UTENSIL_COUNT) {
+    if (currentPlayer.getBasket().getFoodCount() >= REQUIRED_FOOD_COUNT
+            && currentPlayer.getBasket().getDrinkCount() >= REQUIRED_DRINK_COUNT
+            && currentPlayer.getBasket().getUtensilCount() >= REQUIRED_UTENSIL_COUNT) {
       winner = true;
     }
   }
