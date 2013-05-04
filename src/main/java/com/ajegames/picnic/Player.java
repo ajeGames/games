@@ -5,6 +5,7 @@ package com.ajegames.picnic;
  */
 public class Player {
 
+
   private final String name;
   private Basket basket;
 

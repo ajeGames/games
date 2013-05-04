@@ -1,0 +1,88 @@
+Domain Application Protocol (DAP) for the Game Picnic
+=====================================================
+
+Entry Point
+GET /picnic
+
+Create Player -- identifies a player to the picnic system
+POST /picnic/player
+In {
+  "name":"Bubba Gump"
+}
+Out {
+  "player": {
+    "id":"1234"
+    "name":"Bubba Gump"
+  }
+}
+Possible App Exceptions:
+  Conflict -- name already in use
+
+New Game
+POST /picnic/game
+In {
+  "player":<id>,
+  "mode":"solo"|"open"  // solo means vs. computer
+}
+Out {
+  "status":"setup",
+  "players": [
+    {
+      "order":"1",
+      "name":"Bubba Gump"
+    },
+    {
+      "order":"2",
+      "name":"Jersey Joe"
+    }
+  ],
+  links: [
+    { "add player":"http://host:port/picnic/game/" (PUT?) },
+    { "show players":"http://host:port/picnic/game" (GET) },
+  ]
+}
+
+Find Game
+GET /picnic/game/find
+Out {
+  links: [
+    "/picnic/game/1/join",
+    "/picnic/game/2/join",
+    "/picnic/game/3/join"
+  ]
+}
+
+See Game Details
+GET /picnic/game/<id>
+Out {
+  "status":"setup"|"on"|"over",
+  "players": [
+    {
+      "order":"1",
+      "name":"Bubba Gump",
+      "items": {
+        "food":["watermelon","wings","ice cream"],
+        "drink":["water","soda"],
+        "other":["utensils"],
+        "prevention":["sunscreen"]
+      }
+    },
+    {
+      "order":"2",
+      "name":"Jersey Joe"
+    }
+  ],
+  links: [
+    { "add player":"http://host:port/picnic/game/" (PUT?) },
+    { "show players":"http://host:port/picnic/game" (GET) },
+    { "start":"/picnic/game/<id>/start" (POST)}
+  ]
+}
+
+Join Game
+PUT /picnic/game/<id>/join
+In {
+  "player":<id>
+}
+
+POST /picnic/game/<id>/spin
