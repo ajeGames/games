@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
  * Created by AJE Games by bigdaddy on 5/3/13 at 9:53 PM.
  */
 @Path("/picnic")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_HTML)
 public class PicnicResource {
 
   public PicnicResource() {
@@ -20,7 +20,10 @@ public class PicnicResource {
   @GET
   @Timed
   public String getInfo() {
-    return "Hi! Want to play Picnic?";
+    return "<p>Hi! Want to play Picnic?</p>"
+            + "<form action=\"/picnic/player\" method=\"POST\">"
+            + "<input type=\"text\" name=\"name\"/> <label for=\"name\">Player name: </label>"
+            + "<input type=\"submit\" value=\"Add Player\"/></form>";
   }
 
 }
