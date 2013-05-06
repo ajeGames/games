@@ -1,6 +1,5 @@
 package com.ajegames.picnic;
 
-import com.ajegames.utility.Spinner;
 import com.ajegames.utility.SpinnerOption;
 
 import java.util.ArrayList;
@@ -37,8 +36,8 @@ public class Picnic {
       throw new IllegalArgumentException("Need to specify the name of at least one player");
     }
     Picnic picnic = new Picnic();
-    for (String player : args) {
-      picnic.addPlayer(player);
+    for (String playerName : args) {
+      picnic.addPlayer(new Player(playerName));
     }
 
     picnic.play();
@@ -48,9 +47,9 @@ public class Picnic {
     spinner = PicnicSpinner.createPicnicSpinnerWithDefaultOptions();
   }
 
-  public void addPlayer(String playerName) {
-    print("Adding player " + playerName + ".");
-    players.add(new Player(playerName));
+  public void addPlayer(Player player) {
+    print("Adding player " + player.getName() + ".");
+    players.add(player);
   }
 
   private void play() {
