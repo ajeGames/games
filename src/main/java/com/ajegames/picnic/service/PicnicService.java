@@ -3,6 +3,7 @@ package com.ajegames.picnic.service;
 import com.ajegames.picnic.service.resource.PicnicResource;
 import com.ajegames.picnic.service.resource.PlayerResource;
 import com.yammer.dropwizard.Service;
+import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 
@@ -17,6 +18,7 @@ public class PicnicService extends Service<PicnicConfiguration> {
   @Override
   public void initialize(Bootstrap<PicnicConfiguration> bootstrap) {
     bootstrap.setName("picnic");
+    bootstrap.addBundle(new AssetsBundle("/webui/", "/"));
   }
 
   @Override

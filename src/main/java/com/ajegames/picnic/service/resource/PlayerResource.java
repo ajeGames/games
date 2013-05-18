@@ -15,7 +15,7 @@ public class PlayerResource {
 
   @POST
   @Timed
-  public Player createPlayer(@FormParam("name") String name) {
+  public Player createPlayer(@FormParam("playerName") String name) {
     return new Player(name);
   }
 }

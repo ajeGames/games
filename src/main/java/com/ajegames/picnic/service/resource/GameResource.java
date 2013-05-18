@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * Created for AJE Games by bigdaddy on 5/5/13 at 8:54 PM.
  */
-@Path("/picnic/game")
+@Path("/service/picnic/game")
 public class GameResource {
 
   @GET
