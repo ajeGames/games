@@ -12,7 +12,7 @@ public class ItemTest extends TestCase {
     assertEquals("should be food", ItemType.FOOD, picnicItem.getType());
     assertTrue(picnicItem.isFood());
     assertFalse(picnicItem.isDrink());
-    assertFalse(picnicItem.isUtensil());
+    assertFalse(picnicItem.isSupply());
   }
 
   public void testCreateDrink() {
@@ -21,14 +21,14 @@ public class ItemTest extends TestCase {
     assertEquals("should be food", ItemType.DRINK, picnicItem.getType());
     assertTrue(picnicItem.isDrink());
     assertFalse(picnicItem.isFood());
-    assertFalse(picnicItem.isUtensil());
+    assertFalse(picnicItem.isSupply());
   }
 
-  public void testCreateUtensil() {
+  public void testCreateSupply() {
     Item picnicItem;
-    picnicItem = Item.createUtensil("Forks");
-    assertEquals("should be food", ItemType.UTENSIL, picnicItem.getType());
-    assertTrue(picnicItem.isUtensil());
+    picnicItem = Item.createSupply("Forks");
+    assertEquals("should be food", ItemType.SUPPLY, picnicItem.getType());
+    assertTrue(picnicItem.isSupply());
     assertFalse(picnicItem.isFood());
     assertFalse(picnicItem.isDrink());
   }

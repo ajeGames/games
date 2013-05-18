@@ -11,6 +11,6 @@ public class PreventionTest extends ItemTest {
     assertEquals("should be prevention", ItemType.PREVENTION, picnicItem.getType());
     assertFalse(picnicItem.isFood());
     assertFalse(picnicItem.isDrink());
-    assertFalse(picnicItem.isUtensil());
+    assertFalse(picnicItem.isSupply());
   }
 }

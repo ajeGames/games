@@ -41,11 +41,11 @@ public class PlayerTest extends TestCase {
     tester.gatherItem(Item.createDrink("iced tea"));
     tester.gatherItem(Item.createDrink("fruit juice"));
     tester.gatherItem(Item.createDrink("mai tais"));
-    tester.gatherItem(Item.createUtensil("napkins"));
+    tester.gatherItem(Item.createSupply("napkins"));
     Basket basket = tester.getBasket();
     assertEquals("should have 2 food items", 2, basket.getFoodCount());
     assertEquals("should have 3 drink items", 3, basket.getDrinkCount());
-    assertEquals("should have 1 utensil item", 1, basket.getUtensilCount());
+    assertEquals("should have 1 supply item", 1, basket.getSupplyCount());
   }
 
   public void testItemCountsWhenBasketEmpty() {
@@ -54,7 +54,7 @@ public class PlayerTest extends TestCase {
     assertEquals("should have none", 0, basket.getItemCount());
     assertEquals("should have none", 0, basket.getFoodCount());
     assertEquals("should have none", 0, basket.getDrinkCount());
-    assertEquals("should have none", 0, basket.getUtensilCount());
+    assertEquals("should have none", 0, basket.getSupplyCount());
   }
 
   public void testHasPrevention() {
@@ -91,7 +91,7 @@ public class PlayerTest extends TestCase {
     Item icedTea = Item.createDrink("iced tea");
     Item fruitJuice = Item.createDrink("fruit juice");
     Item maiTais = Item.createDrink("mai tais");
-    Item napkins = Item.createUtensil("napkins");
+    Item napkins = Item.createSupply("napkins");
     Item bugSpray = Prevention.createPrevention("bug spray", Nuisance.create("bugs"));
 
     tester.gatherItem(peanuts);
@@ -111,7 +111,7 @@ public class PlayerTest extends TestCase {
     assertTrue(items.contains(fruitJuice));
     assertTrue(items.contains(maiTais));
 
-    items = tester.getBasket().getUtensils();
+    items = tester.getBasket().getSupplies();
     assertTrue(items.contains(napkins));
 
     items = tester.getBasket().getPreventions();
@@ -153,17 +153,17 @@ public class PlayerTest extends TestCase {
     tester.gatherItem(Item.createFood("hot dogs"));
     tester.gatherItem(Item.createFood("chicken"));
     tester.gatherItem(Item.createDrink("milk tea"));
-    tester.gatherItem(Item.createUtensil("forks"));
+    tester.gatherItem(Item.createSupply("forks"));
     tester.gatherItem(Prevention.createPrevention("bug spray", Nuisance.create("mosquitos")));
     Basket basket = tester.getBasket();
     basket.empty();
     assertEquals(0, basket.getItemCount());
-    assertEquals(0, basket.getUtensilCount());
+    assertEquals(0, basket.getSupplyCount());
     assertEquals(0, basket.getFoodCount());
     assertEquals(0, basket.getDrinkCount());
     assertTrue(basket.getDrinks().isEmpty());
     assertTrue(basket.getFoods().isEmpty());
-    assertTrue(basket.getUtensils().isEmpty());
+    assertTrue(basket.getSupplies().isEmpty());
     assertTrue(basket.getPreventions().isEmpty());
   }
 }

@@ -21,7 +21,7 @@ public class PicnicResource {
   @Timed
   public String getInfo() {
     return "<p>Hi! Want to play Picnic?</p>"
-            + "<form action=\"/picnic/player\" method=\"POST\">"
+            + "<form action=\"/service/picnic/player\" method=\"POST\">"
             + "<input type=\"text\" name=\"name\"/> <label for=\"name\">Player name: </label>"
             + "<input type=\"submit\" value=\"Add Player\"/></form>";
   }

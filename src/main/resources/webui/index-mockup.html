@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <title>The Game of Picnic</title>
+  <meta content="AJE Games" name="author">
+  <meta content="Let's have a picnic!" name="description">
+  <meta content="games fun" name="keywords">
+</head>
+<body>
+<h1>Let's Have a Picnic!</h1>
+
+<div id="intro">
+  <p>Tell us who you are, start or join a game, and try to get everything you need to assemble
+    a nice little picnic.&nbsp; The first one to have a complete picnic is the winner.</p>
+</div>
+<div id="who">
+  <form method="POST" action="/picnic/player">
+    <label for="name">Who Are You?</label>
+    <input id="name" name="name" type="text"/>
+    <input value="Join the Fun" name="addPlayer" type="button"/>
+
+    <p>Your player ID is: <span id="playerID">??</span></p>
+  </form>
+</div>
+
+<div id="games">
+  <h2>Decide Who To Play</h2>
+  <form method="POST" action="/picnic/game">
+    <input value="Play Against the Computer" name="playComputer" type="button"/><br/>
+    <input value="Start New Game" name="playOthers" type="button"/><br/>
+    <select name="openGame" size="3">
+    <option id="123">Game 123</option>
+    <option id="234">Game 234</option>
+    <option id="345">Game 345</option>
+    </select>
+    <input value="Join an Open Game" name="joinGame" type="button"/>
+  </form>
+</div>
+
+<div id="board">
+  <h2>Take a Turn</h2>
+  <form method="POST" action="/picnic/game/123/spin">
+    <div><input value="Spin" name="spin" type="button"/></div>
+    <div hidden="true">You win!</div>
+    <div id="latestPick">You got: <img src="img/pizza.png" width="100"/> Pizza</div>
+    <div id="stats">
+      <h3>Your Basket</h3>
+      <!--<span><div>Food</div><div><img src="img/pizza.png" width="100"/> <img src="img/cupcakes.png" width="100"/></div></span>-->
+      <!--<span><div>Drinks</div><div><img src="img/water.png" width="100"/> </div></span>-->
+      <p>Food: <img src="img/pizza.png" width="100"/> <img src="img/cupcakes.png" width="100"/>
+        Drinks: <img src="img/water.png" width="100"/>
+        Supplies:
+        Preventions: <img src="img/sunscreen.png" width="100"/>
+      </p>
+    </div>
+  </form>
+
+  <div id="availablePieces">
+    <h2>Available Pieces</h2>
+
+    <p>
+      <img src="img/ants.png" width="100"/>
+      <img src="img/bacon.png" width="100"/>
+      <img src="img/bugspray.png" width="100"/>
+      <img src="img/chips.png" width="100"/>
+      <img src="img/cupcakes.png" width="100"/>
+      <img src="img/fruit.png" width="100"/>
+      <img src="img/icecream.png" width="100"/>
+      <img src="img/juiceboxes.png" width="100"/>
+      <img src="img/pie.png" width="100"/>
+      <img src="img/pizza.png" width="100"/>
+      <img src="img/rain.png" width="100"/>
+      <img src="img/soda.png" width="100"/>
+      <img src="img/sunburn.png" width="100"/>
+      <img src="img/sunscreen.png" width="100"/>
+      <img src="img/tacos.png" width="100"/>
+      <img src="img/umbrella.png" width="100"/>
+      <img src="img/water.png" width="100"/>
+      <img src="img/wings.png" width="100"/>
+    </p>
+  </div>
+</body>
+</html>

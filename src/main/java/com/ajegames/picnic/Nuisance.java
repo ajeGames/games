@@ -43,9 +43,9 @@ public class Nuisance extends BaseSpinnerOption {
     return newNuisance;
   }
 
-  public static Nuisance createAgainstUtensil(String name) {
+  public static Nuisance createAgainstSupply(String name) {
     Nuisance newNuisance = new Nuisance(name);
-    newNuisance.setWorksAgainstType(ItemType.UTENSIL);
+    newNuisance.setWorksAgainstType(ItemType.SUPPLY);
     return newNuisance;
   }
 
