@@ -34,10 +34,10 @@ public class NuisanceTest extends TestCase {
     assertEquals("should work against food", ItemType.DRINK, newNuisance.getWorksAgainstType());
   }
 
-  public void testCreateNuisanceAgainstUtensil() {
-    Nuisance newNuisance = Nuisance.createAgainstUtensil("wind");
+  public void testCreateNuisanceAgainstSupply() {
+    Nuisance newNuisance = Nuisance.createAgainstSupply("wind");
     assertTrue(newNuisance.isAgainstItemType());
     assertFalse(newNuisance.isAgainstItem());
-    assertEquals("should work against food", ItemType.UTENSIL, newNuisance.getWorksAgainstType());
+    assertEquals("should work against food", ItemType.SUPPLY, newNuisance.getWorksAgainstType());
   }
 }

@@ -26,8 +26,8 @@ public class Item extends BaseSpinnerOption {
     return createPicnicItem(name, ItemType.DRINK);
   }
 
-  public static Item createUtensil(String name) {
-    return createPicnicItem(name, ItemType.UTENSIL);
+  public static Item createSupply(String name) {
+    return createPicnicItem(name, ItemType.SUPPLY);
   }
 
   public boolean isFood() {
@@ -38,8 +38,8 @@ public class Item extends BaseSpinnerOption {
     return type.equals(ItemType.DRINK);
   }
 
-  public boolean isUtensil() {
-    return type.equals(ItemType.UTENSIL);
+  public boolean isSupply() {
+    return type.equals(ItemType.SUPPLY);
   }
 
   public boolean isPrevention() {

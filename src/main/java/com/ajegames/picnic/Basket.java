@@ -11,7 +11,7 @@ public class Basket {
   private List<Item> basket;
   private int foodCount;
   private int drinkCount;
-  private int utensilCount;
+  private int supplyCount;
 
   public Basket() {
     empty();
@@ -21,7 +21,7 @@ public class Basket {
     basket = new ArrayList<Item>();
     foodCount = 0;
     drinkCount = 0;
-    utensilCount = 0;
+    supplyCount = 0;
   }
 
   public void gatherItem(Item item) {
@@ -45,8 +45,8 @@ public class Basket {
     return drinkCount;
   }
 
-  public int getUtensilCount() {
-    return utensilCount;
+  public int getSupplyCount() {
+    return supplyCount;
   }
 
   public List<Item> getFoods() {
@@ -69,10 +69,10 @@ public class Basket {
     return foodItems;
   }
 
-  public List<Item> getUtensils() {
+  public List<Item> getSupplies() {
     List<Item> foodItems = new ArrayList<Item>();
     for (Item item : basket) {
-      if (item.isUtensil()) {
+      if (item.isSupply()) {
         foodItems.add(item);
       }
     }
@@ -120,8 +120,8 @@ public class Basket {
       foodCount++;
     } else if (itemBeingAdded.isDrink()) {
       drinkCount++;
-    } else if (itemBeingAdded.isUtensil()) {
-      utensilCount++;
+    } else if (itemBeingAdded.isSupply()) {
+      supplyCount++;
     }
   }
 
@@ -130,8 +130,8 @@ public class Basket {
       foodCount--;
     } else if (itemBeingRemoved.isDrink()) {
       drinkCount--;
-    } else if (itemBeingRemoved.isUtensil()) {
-      utensilCount--;
+    } else if (itemBeingRemoved.isSupply()) {
+      supplyCount--;
     }
   }
 

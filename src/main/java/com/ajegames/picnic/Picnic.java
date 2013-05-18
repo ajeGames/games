@@ -23,7 +23,7 @@ public class Picnic {
 
   private static final int REQUIRED_FOOD_COUNT = 3;
   private static final int REQUIRED_DRINK_COUNT = 2;
-  private static final int REQUIRED_UTENSIL_COUNT = 1;
+  private static final int REQUIRED_SUPPLY_COUNT = 1;
 
   /**
    * The game can be started and played from the command line.  Ultimately, this will be fronted by a Servlet and
@@ -103,7 +103,7 @@ public class Picnic {
     // decide if winner
     if (currentPlayer.getBasket().getFoodCount() >= REQUIRED_FOOD_COUNT
             && currentPlayer.getBasket().getDrinkCount() >= REQUIRED_DRINK_COUNT
-            && currentPlayer.getBasket().getUtensilCount() >= REQUIRED_UTENSIL_COUNT) {
+            && currentPlayer.getBasket().getSupplyCount() >= REQUIRED_SUPPLY_COUNT) {
       winner = true;
     }
   }

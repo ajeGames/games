@@ -1,6 +1,5 @@
 package com.ajegames.picnic;
 
-import com.ajegames.utility.BaseSpinnerOption;
 import junit.framework.TestCase;
 
 /**
@@ -13,7 +12,7 @@ public class PicnicSpinnerTest extends TestCase {
     PicnicSpinner spinner = PicnicSpinner.createBlankSpinner()
             .addItem(Item.createFood("hamburgers"))
             .addItem(Item.createDrink("soda"))
-            .addItem(Item.createUtensil("napkins"))
+            .addItem(Item.createSupply("napkins"))
             .addItem(Prevention.createPrevention("umbrella", rain))
             .addNuisance(rain)
             .addNuisance(Nuisance.createAgainstFood("ants"));
