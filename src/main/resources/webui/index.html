@@ -2,17 +2,35 @@
 <html>
 <head>
   <title>Picnic UI - In Progress</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="js/picnic.js"></script>
 </head>
 <body>
 
 <h1>Let's Have a Picnic!</h1>
 
+<!--<form action="/service/picnic/player" method="POST">-->
+  <!--<label for="playerName">Who are you?</label> <input id="playerName" name="playerName" type="text"/>-->
+  <!--<input type="submit" value="Start Game"/></form>-->
 
-<p>Hi! Want to play Picnic?</p>
-
-<form action="/service/picnic/player" method="POST">
-  <label for="playerName">Who are you?</label> <input id="playerName" name="playerName" type="text"/>
-  <input type="submit" value="Start Game"/></form>
+  <div id="basket">
+    <p>
+      <button id="addFoodButton">Add Food Item</button>
+      <button id="addDrinkButton">Add Drink Item</button>
+      <button id="addSupplyButton">Add Supply</button>
+    </p>
+    <div id="food" style="position:relative">
+      <span id="foodList">
+      </span>
+    </div>
+    <div id="drinks" style="position:relative">
+      <span id="drinkList">
+      </span>
+    </div>
+    <div id="supply" style="position:relative">
+      <span id="supplyList">
+      </span>
+    </div>
+  </div>
 </body>
 </html>
