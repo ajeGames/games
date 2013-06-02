@@ -7,27 +7,37 @@
   <meta content="Let's have a picnic!" name="description">
   <meta content="games fun" name="keywords">
   <link rel="stylesheet" type="text/css" href="picnic.css">
-  <style>
-  </style>
-  <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>-->
-  <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"/>-->
-  <script src="js/picnic.js"/>
-  <script>
-  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="js/picnic.js"></script>
 </head>
 
 <body>
-
 <h1>Let's Have a Picnic!</h1>
-
-<div id="intro">
-  <p>First, tell us who you are.  Then you can join a new game.</p>
-</div>
 
 <div id="who">
   <label for="playerName">Who Are You?</label> <input id="playerName" name="playerName" type="text" />
   <button type="button" onclick="blast()">Join the Fun</button>
   <p>Your player ID is: <span id="playerID">n/a</span></p>
+</div>
+
+<div id="basket">
+  <p>
+    <button id="addFoodButton">Add Food Item</button>
+    <button id="addDrinkButton">Add Drink Item</button>
+    <button id="addSupplyButton">Add Supply</button>
+  </p>
+  <div id="food" style="position:relative">
+    <span id="foodList">
+    </span>
+  </div>
+  <div id="drinks" style="position:relative">
+    <span id="drinkList">
+    </span>
+  </div>
+  <div id="supply" style="position:relative">
+    <span id="supplyList">
+    </span>
+  </div>
 </div>
 
 </body>
