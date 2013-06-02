@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Picnic UI - In Progress</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript" />
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <title>The Game of Picnic</title>
+  <meta content="AJE Games" name="author">
+  <meta content="Let's have a picnic!" name="description">
+  <meta content="games fun" name="keywords">
+  <link rel="stylesheet" type="text/css" href="picnic.css">
+  <style>
+  </style>
+  <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>-->
+  <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"/>-->
+  <script src="js/picnic.js"/>
+  <script>
+  </script>
 </head>
+
 <body>
 
 <h1>Let's Have a Picnic!</h1>
 
+<div id="intro">
+  <p>First, tell us who you are.  Then you can join a new game.</p>
+</div>
 
-<p>Hi! Want to play Picnic?</p>
+<div id="who">
+  <label for="playerName">Who Are You?</label> <input id="playerName" name="playerName" type="text" />
+  <button type="button" onclick="blast()">Join the Fun</button>
+  <p>Your player ID is: <span id="playerID">n/a</span></p>
+</div>
 
-<form action="/service/picnic/player" method="POST">
-  <label for="playerName">Who are you?</label> <input id="playerName" name="playerName" type="text"/>
-  <input type="submit" value="Start Game"/></form>
 </body>
 </html>
