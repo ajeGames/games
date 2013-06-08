@@ -8,6 +8,10 @@ $(document).ready(function() {
         addToBasket("#foodList", "bacon");
     });
 
+    $("#removeFoodButton").click(function() {
+        removeFromBasket("#foodList", "bacon");
+    });
+
     $("#addDrinkButton").click(function() {
         addToBasket("#drinkList", "water");
     });
@@ -19,4 +23,16 @@ $(document).ready(function() {
 
 function addToBasket(type, foodItem) {
     $(type).append('<img src="img/' + foodItem + '.png" width="120"/>');
+}
+
+function removeFromBasket(type, foodItem) {
+    var images = $(type).children();
+    for (image in images) {
+      var href = image.attr("href");
+      if (href.contains("/" + foodItem + ".png")) {
+        image.remove();
+        break;
+      }
+    }
+    alert("pause here for a moment");
 }
