@@ -12,6 +12,14 @@ $(document).ready(function() {
         removeFromBasket("#foodList", "bacon");
     });
 
+    $("#removeDrinkButton").click(function() {
+        removeFromBasket("#drinkList", "water");
+    });
+
+    $("#removeSupplyButton").click(function() {
+        removeFromBasket("#supplyList", "sunscreen");
+    });
+
     $("#addDrinkButton").click(function() {
         addToBasket("#drinkList", "water");
     });
@@ -19,28 +27,30 @@ $(document).ready(function() {
     $("#addSupplyButton").click(function() {
         addToBasket("#supplyList", "sunscreen");
     });
+
+    $("#testAddButton").click(function() {
+        addToBasket("#foodList", $("#testItem").val());
+    });
+
+    $("#testRemoveButton").click(function() {
+        removeFromBasket("#foodList", $("#testItem").val());
+    });
+
+    function addToBasket(type, foodItem) {
+        $(type).append('<img src="img/' + foodItem + '.png" width="120" name="' + foodItem + '"/>');
+    }
+
+    function removeFromBasket(type, foodItem) {
+        var blah = $("img").attr("src");
+        var items = $(type + ' img');
+        items.each(function() {
+            if ($(this).attr('name') == foodItem) {
+                $(this).remove();
+                return false;
+            }
+            return true;
+        });
+    }
+
 });
 
-function addToBasket(type, foodItem) {
-    $(type).append('<img src="img/' + foodItem + '.png" width="120"/>');
-}
-
-function removeFromBasket(type, foodItem) {
-    var images = $(type).children();
-    for (image in images) {
-      var href = image.attr("href");
-      if (href.contains("/" + foodItem + ".png")) {
-        image.remove();
-        break;
-      }
-    }
-    alert("pause here for a moment");
-    // FIXME
-    var list = $(type).find("img");
-    for (item in list) {
-        if (item.attr("href").contains(foodItem)) {
-            item.remove();
-            break;
-        }
-    }
-}
