@@ -35,4 +35,12 @@ function removeFromBasket(type, foodItem) {
       }
     }
     alert("pause here for a moment");
+    // FIXME
+    var list = $(type).find("img");
+    for (item in list) {
+        if (item.attr("href").contains(foodItem)) {
+            item.remove();
+            break;
+        }
+    }
 }
