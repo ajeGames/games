@@ -1,6 +1,7 @@
 package com.ajegames.picnic.service.resource;
 
 import com.ajegames.picnic.Player;
+import com.ajegames.picnic.repository.PlayerRepository;
 import com.yammer.metrics.annotation.Timed;
 
 import javax.ws.rs.*;
@@ -16,6 +17,9 @@ public class PlayerResource {
   @POST
   @Timed
   public Player createPlayer(@FormParam("playerName") String name) {
-    return new Player(name);
+    PlayerRepository playerRepo = PlayerRepository.getInstance();
+    Player player = new Player(name);
+    playerRepo.addPlayer(player);
+    return player;
   }
 }

@@ -5,13 +5,21 @@ package com.ajegames.picnic;
  */
 public class Player {
 
-
+  private long id;
   private final String name;
   private Basket basket;
 
   public Player(String playerName) {
     name = playerName;
     basket = new Basket();
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 
   public String getName() {

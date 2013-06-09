@@ -67,6 +67,10 @@ public class Picnic {
     indexCurrentPlayer = ++indexCurrentPlayer % players.size();
   }
 
+  public PicnicSpinner getSpinner() {
+    return spinner;
+  }
+
   private boolean winner() {
     return winner;
   }

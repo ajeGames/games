@@ -31,6 +31,7 @@ public class PlayerRepository {
   }
 
   synchronized public String addPlayer(Player player) {
+    player.setId(nextID);
     String nextIDStr = Long.toString(nextID++);
     players.put(nextIDStr, player);
     return nextIDStr;

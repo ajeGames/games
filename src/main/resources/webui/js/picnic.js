@@ -1,10 +1,25 @@
 $(document).ready(function() {
 
-    $("#joinButton").click(function() {
+    $("#registerPlayerButton").click(function() {
         // create a player on the server -- hold onto player key
         // for now, just echo input field on screen
-        $("#playerID").text($("#playerName").val())
+        $.post("service/picnic/player",
+            {
+                playerName: $("#playerName").val()
+            },
+            function(data, status) {
+                $("#playerID").text(data.id);
+            });
     });
+
+    $("#spinButton").click(function() {
+        $.post("service/picnic/game", {},
+            function(data, status) {
+                // FIXME -- not being invoked or at least result does not appear in UI
+                $("#spinResult").text(data);
+            }
+        )
+    })
 
     $("#addFoodButton").click(function() {
         addToBasket("#foodList", "bacon");
@@ -53,6 +68,5 @@ $(document).ready(function() {
             return true;
         });
     }
-
 });
 

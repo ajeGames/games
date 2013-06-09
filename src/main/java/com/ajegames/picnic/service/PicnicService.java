@@ -1,5 +1,6 @@
 package com.ajegames.picnic.service;
 
+import com.ajegames.picnic.service.resource.GameResource;
 import com.ajegames.picnic.service.resource.PicnicResource;
 import com.ajegames.picnic.service.resource.PlayerResource;
 import com.yammer.dropwizard.Service;
@@ -25,5 +26,6 @@ public class PicnicService extends Service<PicnicConfiguration> {
   public void run(PicnicConfiguration configuration, Environment environment) {
     environment.addResource(new PicnicResource());
     environment.addResource(new PlayerResource());
+    environment.addResource(new GameResource());
   }
 }

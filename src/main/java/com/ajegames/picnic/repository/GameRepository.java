@@ -34,4 +34,9 @@ public class GameRepository {
     games.put(nextIDStr, gameInstance);
     return nextIDStr;
   }
+
+  public String putGame(String id, Picnic gameInstance) {
+    games.put(id, gameInstance);
+    return id;
+  }
 }
