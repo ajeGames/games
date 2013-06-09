@@ -1,7 +1,9 @@
 $(document).ready(function() {
 
-    $("h1").click(function() {
-        $(this).css("color", "red");
+    $("#joinButton").click(function() {
+        // create a player on the server -- hold onto player key
+        // for now, just echo input field on screen
+        $("#playerID").text($("#playerName").val())
     });
 
     $("#addFoodButton").click(function() {
