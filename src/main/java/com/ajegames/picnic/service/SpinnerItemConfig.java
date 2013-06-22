@@ -2,14 +2,18 @@ package com.ajegames.picnic.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
  * Created for AJE Games by bigdaddy on 6/22/13 at 11:13 AM.
  */
-public class ItemFactory {
+public class SpinnerItemConfig {
 
   private String key;
   private String description;
   private int weight = 1;
+  private String impact;
+  private String counteracts;
 
   @JsonProperty
   public String getKey() {
@@ -41,4 +45,29 @@ public class ItemFactory {
     this.weight = weight;
   }
 
+  @JsonProperty
+  public String getImpact() {
+    return impact;
+  }
+
+  @JsonProperty
+  public void setImpact(String impact) {
+    this.impact = impact;
+  }
+
+/*
+  @JsonProperty
+  public List<String> getCounteracts() {
+    return counteracts;
+  }
+
+  @JsonProperty
+  public void setCounteracts(List<String> counteracts) {
+    this.counteracts = counteracts;
+  }
+*/
+
+  public void setCounteracts(String counteracts) {
+    this.counteracts = counteracts;
+  }
 }

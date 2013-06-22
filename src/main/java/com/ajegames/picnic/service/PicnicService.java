@@ -28,6 +28,6 @@ public class PicnicService extends Service<PicnicConfiguration> {
 
     environment.addResource(new PicnicResource());
     environment.addResource(new PlayerResource());
-    environment.addResource(new GameResource());
+    environment.addResource(new GameResource(spinnerConfig));
   }
 }

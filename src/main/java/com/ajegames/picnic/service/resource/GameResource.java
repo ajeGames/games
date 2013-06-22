@@ -1,10 +1,11 @@
 package com.ajegames.picnic.service.resource;
 
+import com.ajegames.picnic.Item;
 import com.ajegames.picnic.Picnic;
 import com.ajegames.picnic.PicnicSpinner;
-import com.ajegames.picnic.Player;
 import com.ajegames.picnic.repository.GameRepository;
-import com.ajegames.picnic.repository.PlayerRepository;
+import com.ajegames.picnic.service.SpinnerItemConfig;
+import com.ajegames.picnic.service.SpinnerConfiguration;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -14,6 +15,19 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/picnic/game")
 public class GameResource {
+
+  public GameResource(SpinnerConfiguration spinnerConfig) {
+
+    // create a new game and stash in repository
+    PicnicSpinner spinner = PicnicSpinner.createBlankSpinner();
+    for (SpinnerItemConfig item : spinnerConfig.getFoods()) {
+      for (int i = 0; i < item.getWeight(); i++) {
+        spinner.addItem(Item.createFood(item.getKey()));
+      }
+    }
+
+    System.out.println();
+  }
 
   @GET
   @PathParam("/{gameID}")

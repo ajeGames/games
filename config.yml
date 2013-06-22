@@ -2,27 +2,64 @@ http:
     rootPath: /service/*
 
 spinner:
-    items:
-      - key: pizza
-        description: Pizza
-      - key: ants
-        description: Ants
-        weight: 3
+    foods:
       - key: bacon
         description: "Bacon Strips"
         weight: 2
-      - key: bugspray
-        description: "Bug Spray"
-      - key: rain
-        description: Rain
-      - key: soda
-        description: Soda
-        weight: 4
-      - key: sunburn
-        description: Sunburn
-      - key: sunscreen
-        description: Sunscreen
+      - key: chips
+        description: Chips
+        weight: 3
+      - key: cupcakes
+        description: Cupcakes
+      - key: fruit
+        description: Fruit
+      - key: icecream
+        description: "Ice Cream Bars"
+        weight: 2
+      - key: pie
+        description: Pie
+      - key: pizza
+        description: Pizza
       - key: tacos
         description: Tacos
+      - key: wings
+        description: "Buffalo Wings"
+    drinks:
+      - key: juiceboxes
+        description: "Juice Boxes"
+        weight: 3
+      - key: soda
+        description: Soda
+        weight: 3
+      - key: water
+        description: Water
+        weight: 3
+    supplies:
+      - key: plasticWare
+        description: "Plastic forks, spoons, knives"
+      - key: napkins
+        description: Napkins
+    nuisances:
+      - key: ants
+        description: Ants
+        weight: 3
+        impact: reduces-food
+      - key: blackflies
+        description: "Black Flies"
+        impact: lose-turn
+      - key: rain
+        description: Rain
+        impact: wipeout
+      - key: sunburn
+        description: Sunburn
+        impact: lose-turn
+    preventions:
+      - key: sunscreen
+        description: Sunscreen
+        counteracts: sunburn
+      - key: bugspray
+        description: "Bug Spray"
+        counteracts: ants, blackflies
       - key: umbrella
         description: Umbrella
+        counteracts: rain
