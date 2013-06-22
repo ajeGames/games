@@ -24,6 +24,8 @@ public class PicnicService extends Service<PicnicConfiguration> {
 
   @Override
   public void run(PicnicConfiguration configuration, Environment environment) {
+    SpinnerConfiguration spinnerConfig = configuration.getSpinnerConfiguration();
+
     environment.addResource(new PicnicResource());
     environment.addResource(new PlayerResource());
     environment.addResource(new GameResource());

@@ -1,2 +1,28 @@
 http:
     rootPath: /service/*
+
+spinner:
+    items:
+      - key: pizza
+        description: Pizza
+      - key: ants
+        description: Ants
+        weight: 3
+      - key: bacon
+        description: "Bacon Strips"
+        weight: 2
+      - key: bugspray
+        description: "Bug Spray"
+      - key: rain
+        description: Rain
+      - key: soda
+        description: Soda
+        weight: 4
+      - key: sunburn
+        description: Sunburn
+      - key: sunscreen
+        description: Sunscreen
+      - key: tacos
+        description: Tacos
+      - key: umbrella
+        description: Umbrella

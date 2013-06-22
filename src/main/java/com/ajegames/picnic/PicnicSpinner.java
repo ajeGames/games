@@ -17,6 +17,9 @@ public class PicnicSpinner extends Spinner {
     return spinner;
   }
 
+  private void initFromConfig() {
+  }
+
   private void initialize() {
     Nuisance ants = Nuisance.createAgainstFood("Ants");
     Nuisance wind = Nuisance.createAgainstSupply("Wind");

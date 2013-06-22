@@ -11,7 +11,7 @@ In {
 }
 Out {
   "player": {
-    "id":"1234"
+    "key":"1234"
     "name":"Bubba Gump"
   }
 }
@@ -21,7 +21,7 @@ Possible App Exceptions:
 New Game
 POST /picnic/game
 In {
-  "player":<id>,
+  "player":<key>,
   "mode":"solo"|"open"  // solo means vs. computer
 }
 Out {
@@ -53,7 +53,7 @@ Out {
 }
 
 See Game Details
-GET /picnic/game/<id>
+GET /picnic/game/<key>
 Out {
   "status":"setup"|"on"|"over",
   "players": [
@@ -75,14 +75,14 @@ Out {
   links: [
     { "add player":"http://host:port/picnic/game/" (PUT?) },
     { "show players":"http://host:port/picnic/game" (GET) },
-    { "start":"/picnic/game/<id>/start" (POST)}
+    { "start":"/picnic/game/<key>/start" (POST)}
   ]
 }
 
 Join Game
-PUT /picnic/game/<id>/join
+PUT /picnic/game/<key>/join
 In {
-  "player":<id>
+  "player":<key>
 }
 
-POST /picnic/game/<id>/spin
+POST /picnic/game/<key>/spin
