@@ -5,53 +5,47 @@ import java.util.List;
 
 /**
  * Acts like a game spinner, which is shaped like a pie with each wedge being an option.  Spinning the spinner
- * results in it pointing to one of the wedges at random.
+ * results in it pointing to one of the wedges at random.  This is designed to be stateless; results must be
+ * held by the spinning agent to preserve any sense of history.  This design allows multiple games to be played
+ * simultaneously using the same spinner configuration.
  */
 public class Spinner {
 
-  Randomizer randomSource;
-  List<SpinnerOption> choices = new ArrayList<SpinnerOption>();
-  double lastSpin = 0.0f;
+  protected Randomizer randomSource;
+  private List<SpinnerOption> options = new ArrayList<SpinnerOption>();
 
   public Spinner() {
     setRandomizer(new RandomNumberGenerator());
   }
 
-  public Spinner(Randomizer randomizer){
-    setRandomizer(randomizer);
-  }
-
-  private void setRandomizer(Randomizer randomizer) {
+  /**
+   * Allows use of alternative randomization strategies, including strategies for controlling values during testing
+   *
+   * @param randomizer
+   */
+  protected void setRandomizer(Randomizer randomizer) {
     randomSource = randomizer;
   }
 
   public Spinner addOption(String value) {
-    choices.add(new BaseSpinnerOption(value));
+    options.add(new BaseSpinnerOption(value));
     return this;
   }
 
   protected Spinner addOption(SpinnerOption option) {
-    choices.add(option);
+    options.add(option);
     return this;
   }
 
   public int getNumberOfChoices() {
-    return choices.size();
+    return options.size();
   }
 
-  public void spin() {
-    lastSpin = randomSource.getRandom();
-  }
-
-  public String getSelectedValue() {
-    return getSelected().getValue();
-  }
-
-  public SpinnerOption getSelected() {
-    int indexOfSelection = (int) Math.floor(lastSpin * choices.size());
-    if (indexOfSelection == choices.size()) {
+  synchronized public SpinnerOption spin() {
+    int indexOfSelection = (int) Math.floor(randomSource.getRandom() * options.size());
+    if (indexOfSelection == options.size()) {
       indexOfSelection--;
     }
-    return choices.get(indexOfSelection);
+    return options.get(indexOfSelection);
   }
 }

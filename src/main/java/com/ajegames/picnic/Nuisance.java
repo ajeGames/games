@@ -1,18 +1,21 @@
 package com.ajegames.picnic;
 
-import com.ajegames.utility.BaseSpinnerOption;
-
 /**
  * Things that work against the objective of having a picnic.
  */
-public class Nuisance extends BaseSpinnerOption {
+public class Nuisance extends Item {
 
   private Item worksAgainst;
   private ItemType worksAgainstType;
   private boolean wipeOut;
 
   private Nuisance(String name) {
-    super(name);
+    super(name, ItemType.NUISANCE);
+  }
+
+  @Override
+  public boolean isNuisance() {
+    return true;
   }
 
   public static Nuisance create(String name) {

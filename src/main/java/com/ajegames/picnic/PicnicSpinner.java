@@ -7,7 +7,7 @@ import com.ajegames.utility.Spinner;
  */
 public class PicnicSpinner extends Spinner {
 
-  public static PicnicSpinner createBlankSpinner() {
+  public static PicnicSpinner createEmptySpinner() {
     return new PicnicSpinner();
   }
 
@@ -15,9 +15,6 @@ public class PicnicSpinner extends Spinner {
     PicnicSpinner spinner = new PicnicSpinner();
     spinner.initialize();
     return spinner;
-  }
-
-  private void initFromConfig() {
   }
 
   private void initialize() {

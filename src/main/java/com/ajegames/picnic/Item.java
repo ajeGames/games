@@ -46,6 +46,10 @@ public class Item extends BaseSpinnerOption {
     return false;
   }
 
+  public boolean isNuisance() {
+    return false;
+  }
+
   public ItemType getType() {
     return type;
   }

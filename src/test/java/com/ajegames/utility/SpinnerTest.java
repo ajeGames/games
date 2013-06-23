@@ -13,8 +13,8 @@ public class SpinnerTest extends TestCase {
     Spinner spinner = new Spinner().addOption("Amanda");
 
     for (int i = 0; i < 1000; i++) {
-      spinner.spin();
-      assertEquals("Amanda", spinner.getSelectedValue());
+      SpinnerOption result = spinner.spin();
+      assertEquals("Amanda", result.getValue());
     }
   }
 
@@ -30,8 +30,7 @@ public class SpinnerTest extends TestCase {
     }
 
     for (int i = 0; i < 1000; i++) {
-      spinner.spin();
-      String selectedValue = spinner.getSelectedValue();
+      String selectedValue = spinner.spin().getValue();
       Integer count = counts.get(selectedValue);
       counts.put(selectedValue, count+1);
     }
@@ -46,29 +45,26 @@ public class SpinnerTest extends TestCase {
   public void testFourChoices() {
     String[] options = new String[] { "North", "South", "East", "West" };
     PluggableRandomizer fixedRandomNumber = MockRandomNumberGenerator.createMockRandomizer();
-    Spinner spinner = new Spinner(fixedRandomNumber);
+    Spinner spinner = new ControlSpinner(fixedRandomNumber);
     for (String option : options) {
       spinner.addOption(option);
     }
 
     fixedRandomNumber.setValue(0.15d);
-    spinner.spin();
-    assertEquals(options[0], spinner.getSelectedValue());
+    assertEquals(options[0], spinner.spin().getValue());
 
     fixedRandomNumber.setValue(0.49d);
-    spinner.spin();
-    assertEquals(options[1], spinner.getSelectedValue());
+    assertEquals(options[1], spinner.spin().getValue());
 
     fixedRandomNumber.setValue(0.50d);
-    spinner.spin();
-    assertEquals(options[2], spinner.getSelectedValue());
+    assertEquals(options[2], spinner.spin().getValue());
 
     fixedRandomNumber.setValue(0.99d);
     spinner.spin();
-    assertEquals(options[3], spinner.getSelectedValue());
+    assertEquals(options[3], spinner.spin().getValue());
 
     fixedRandomNumber.setValue(1.0d);
     spinner.spin();
-    assertEquals(options[3], spinner.getSelectedValue());
+    assertEquals(options[3], spinner.spin().getValue());
   }
 }

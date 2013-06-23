@@ -67,6 +67,12 @@ public class SpinnerItemConfig {
   }
 */
 
+  @JsonProperty
+  public String getCounteracts() {
+    return counteracts;
+  }
+
+  @JsonProperty
   public void setCounteracts(String counteracts) {
     this.counteracts = counteracts;
   }

@@ -47,6 +47,10 @@ public class Picnic {
     spinner = PicnicSpinner.createPicnicSpinnerWithDefaultOptions();
   }
 
+  public Picnic(PicnicSpinner spinner) {
+    this.spinner = spinner;
+  }
+
   public void addPlayer(Player player) {
     print("Adding player " + player.getName() + ".");
     players.add(player);
@@ -76,30 +80,28 @@ public class Picnic {
   }
 
   private void takeTurn() {
-    // spin
-    spinner.spin();
-
-    // do something about selection
     Player currentPlayer = players.get(indexCurrentPlayer);
-    SpinnerOption selectedItem = spinner.getSelected();
+    SpinnerOption selectedItem = spinner.spin();
 
     if (selectedItem instanceof Item) {
-      currentPlayer.gatherItem((Item) selectedItem);
+      if (!((Item) selectedItem).isNuisance()) {
+        currentPlayer.gatherItem((Item) selectedItem);
+      }
+      else {
+        Nuisance aProblem = (Nuisance) selectedItem;
+        if (!currentPlayer.getBasket().hasPrevention(aProblem)) {
+          print("==X Do something dastardly to " + currentPlayer.getName() + " due to " + aProblem.getValue());
 
-    } else if (selectedItem instanceof Nuisance) {
-      Nuisance aProblem = (Nuisance) selectedItem;
-      if (!currentPlayer.getBasket().hasPrevention(aProblem)) {
-        print("==X Do something dastardly to " + currentPlayer.getName() + " due to " + aProblem.getValue());
-
-        if (aProblem.isAgainstItem()) {
-          currentPlayer.getBasket().removeItem(aProblem.getWorksAgainst());
-        } else if (aProblem.isAgainstItemType()) {
-          currentPlayer.getBasket().removeItemOfType(aProblem.getWorksAgainstType());
-        } else if (aProblem.isWipeOut()) {
-          currentPlayer.getBasket().empty();
+          if (aProblem.isAgainstItem()) {
+            currentPlayer.getBasket().removeItem(aProblem.getWorksAgainst());
+          } else if (aProblem.isAgainstItemType()) {
+            currentPlayer.getBasket().removeItemOfType(aProblem.getWorksAgainstType());
+          } else if (aProblem.isWipeOut()) {
+            currentPlayer.getBasket().empty();
+          }
+        } else {
+          print("==O Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
         }
-      } else {
-        print("==O Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
       }
     }
     print("* " + currentPlayer.toString());

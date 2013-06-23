@@ -1,20 +1,18 @@
 package com.ajegames.utility;
 
 /**
- * base implementation that takes care of things like name, value, weight, image
- *
- * TODO add support for value, weight, image, etc
+ * base implementation that holds a single key value
  */
 public class BaseSpinnerOption implements SpinnerOption {
 
-  protected String name;
+  protected String value;
 
-  public BaseSpinnerOption(String name) {
-    this.name = name;
+  public BaseSpinnerOption(String value) {
+    this.value = value;
   }
 
   public String getValue() {
-    return name;
+    return value;
   }
 
   @Override
@@ -24,13 +22,11 @@ public class BaseSpinnerOption implements SpinnerOption {
 
     BaseSpinnerOption that = (BaseSpinnerOption) o;
 
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-    return true;
+    return !(value != null ? !value.equals(that.value) : that.value != null);
   }
 
   @Override
   public int hashCode() {
-    return name != null ? name.hashCode() : 0;
+    return value != null ? value.hashCode() : 0;
   }
 }

@@ -9,7 +9,7 @@ public class PicnicSpinnerTest extends TestCase {
 
   public void testCreateSpinnerWithDefaults() {
     Nuisance rain = Nuisance.create("rain");
-    PicnicSpinner spinner = PicnicSpinner.createBlankSpinner()
+    PicnicSpinner spinner = PicnicSpinner.createEmptySpinner()
             .addItem(Item.createFood("hamburgers"))
             .addItem(Item.createDrink("soda"))
             .addItem(Item.createSupply("napkins"))
