@@ -11,6 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
     <orderEntry type="library" name="Maven: com.yammer.dropwizard:dropwizard-core:0.6.2" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.17.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-server:1.17.1" level="project" />
@@ -55,7 +56,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.beanshell:bsh:2.0b4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.beust:jcommander:1.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.yaml:snakeyaml:1.6" level="project" />
-    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
   </component>
 </module>
 
