@@ -1,8 +1,8 @@
 package com.ajegames.picnic;
 
 import com.ajegames.utility.SpinnerOption;
+import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Picnic {
 
-  List<Player> players = new ArrayList<Player>();
+  List<Player> players = Lists.newArrayList();
   int indexCurrentPlayer = -1;
   PicnicSpinner spinner;
   boolean winner;
@@ -25,30 +25,8 @@ public class Picnic {
   private static final int REQUIRED_DRINK_COUNT = 2;
   private static final int REQUIRED_SUPPLY_COUNT = 1;
 
-  /**
-   * The game can be started and played from the command line.  Ultimately, this will be fronted by a Servlet and
-   * exposed as a web app.
-   *
-   * @param args Player names
-   */
-  public static void main(String[] args) {
-    if (args.length == 0) {
-      throw new IllegalArgumentException("Need to specify the name of at least one player");
-    }
-    Picnic picnic = new Picnic();
-    for (String playerName : args) {
-      picnic.addPlayer(new Player(playerName));
-    }
-
-    picnic.play();
-  }
-
   public Picnic() {
-    spinner = PicnicSpinner.createPicnicSpinnerWithDefaultOptions();
-  }
-
-  public Picnic(PicnicSpinner spinner) {
-    this.spinner = spinner;
+    this.spinner = PicnicSpinner.createInstance();
   }
 
   public void addPlayer(Player player) {
@@ -56,7 +34,7 @@ public class Picnic {
     players.add(player);
   }
 
-  private void play() {
+  public void play() {
     // take turn; continue until player wins
     print("\nAnd here we go...");
     print("\n==Play by play==");

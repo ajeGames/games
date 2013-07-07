@@ -33,7 +33,7 @@ public class PicnicResource {
    */
   @POST
   public String startGame() {
-
+    return "unimplemented";
   }
 
 }

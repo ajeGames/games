@@ -10,7 +10,7 @@ import java.util.Map;
 public class SpinnerTest extends TestCase {
 
   public void testSpinnerWithOneChoice() {
-    Spinner spinner = new Spinner().addOption("Amanda");
+    Spinner spinner = new Spinner().addOption(new BaseSpinnerOption("Amanda"));
 
     for (int i = 0; i < 1000; i++) {
       SpinnerOption result = spinner.spin();
@@ -25,7 +25,8 @@ public class SpinnerTest extends TestCase {
     Spinner spinner = new Spinner();
     Map<String, Integer> counts = new HashMap<String, Integer>();
     for (String option : options) {
-      spinner.addOption(option);
+      SpinnerOption opt = new BaseSpinnerOption(option);
+      spinner.addOption(opt);
       counts.put(option, 0);
     }
 
@@ -47,7 +48,8 @@ public class SpinnerTest extends TestCase {
     PluggableRandomizer fixedRandomNumber = MockRandomNumberGenerator.createMockRandomizer();
     Spinner spinner = new ControlSpinner(fixedRandomNumber);
     for (String option : options) {
-      spinner.addOption(option);
+      SpinnerOption opt = new BaseSpinnerOption(option);
+      spinner.addOption(opt);
     }
 
     fixedRandomNumber.setValue(0.15d);

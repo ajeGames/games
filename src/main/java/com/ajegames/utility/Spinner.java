@@ -1,6 +1,7 @@
 package com.ajegames.utility;
 
-import java.util.ArrayList;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 /**
@@ -11,8 +12,8 @@ import java.util.List;
  */
 public class Spinner {
 
-  protected Randomizer randomSource;
-  private List<SpinnerOption> options = new ArrayList<SpinnerOption>();
+  private Randomizer randomSource;
+  private List<SpinnerOption> options = Lists.newArrayList();
 
   public Spinner() {
     setRandomizer(new RandomNumberGenerator());
@@ -27,18 +28,9 @@ public class Spinner {
     randomSource = randomizer;
   }
 
-  public Spinner addOption(String value) {
-    options.add(new BaseSpinnerOption(value));
-    return this;
-  }
-
-  protected Spinner addOption(SpinnerOption option) {
+  public Spinner addOption(SpinnerOption option) {
     options.add(option);
     return this;
-  }
-
-  public int getNumberOfChoices() {
-    return options.size();
   }
 
   synchronized public SpinnerOption spin() {
