@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 public class NuisanceTest extends TestCase {
 
   public void testCreateNuisance() {
-    Nuisance newNuisance = Nuisance.create("rain");
+    Nuisance newNuisance = Nuisance.createWipeOut("rain");
     assertFalse("should be generic", newNuisance.isAgainstItem());
     assertFalse("should be generic", newNuisance.isAgainstItemType());
   }

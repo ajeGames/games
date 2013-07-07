@@ -9,47 +9,71 @@ public class Nuisance extends Item {
   private ItemType worksAgainstType;
   private boolean wipeOut;
 
-  private Nuisance(String name) {
-    super(name, ItemType.NUISANCE);
+  private Nuisance(String key, String description) {
+    super(key, description, ItemType.NUISANCE);
   }
 
-  @Override
-  public boolean isNuisance() {
-    return true;
-  }
+  /*
+    === creation methods ===
+   */
 
-  public static Nuisance create(String name) {
-    return new Nuisance(name);
-  }
-
-  public static Nuisance createWipeOut(String name) {
-    Nuisance newNuisance = create(name);
+  public static Nuisance createWipeOut(String key, String description) {
+    Nuisance newNuisance = new Nuisance(key, description);
     newNuisance.wipeOut = true;
     return newNuisance;
   }
 
-  public static Nuisance createAgainstItem(String name, Item itemToCounteract) {
-    Nuisance newNuisance = new Nuisance(name);
+  public static Nuisance createWipeOut(String key) {
+    return createWipeOut(key, key);
+  }
+
+  public static Nuisance createAgainstItem(String key, String description, Item itemToCounteract) {
+    Nuisance newNuisance = new Nuisance(key, description);
     newNuisance.setWorksAgainst(itemToCounteract);
     return newNuisance;
   }
 
-  public static Nuisance createAgainstFood(String name) {
-    Nuisance newNuisance = new Nuisance(name);
-    newNuisance.setWorksAgainstType(ItemType.FOOD);
+  public static Nuisance createAgainstItem(String key, Item itemToCounteract) {
+    return createAgainstItem(key, key, itemToCounteract);
+  }
+
+  private static Nuisance createAgainstType(String key, String description, ItemType type) {
+    Nuisance newNuisance = new Nuisance(key, description);
+    newNuisance.setWorksAgainstType(type);
     return newNuisance;
   }
 
-  public static Nuisance createAgainstDrink(String name) {
-    Nuisance newNuisance = new Nuisance(name);
-    newNuisance.setWorksAgainstType(ItemType.DRINK);
-    return newNuisance;
+  public static Nuisance createAgainstFood(String key, String description) {
+    return createAgainstType(key, description, ItemType.FOOD);
   }
 
-  public static Nuisance createAgainstSupply(String name) {
-    Nuisance newNuisance = new Nuisance(name);
-    newNuisance.setWorksAgainstType(ItemType.SUPPLY);
-    return newNuisance;
+  public static Nuisance createAgainstDrink(String key, String description) {
+    return createAgainstType(key, description, ItemType.DRINK);
+  }
+
+  public static Nuisance createAgainstSupply(String key, String description) {
+    return createAgainstType(key, description, ItemType.SUPPLY);
+  }
+
+  public static Nuisance createAgainstFood(String key) {
+    return createAgainstFood(key, key);
+  }
+
+  public static Nuisance createAgainstDrink(String key) {
+    return createAgainstDrink(key, key);
+  }
+
+  public static Nuisance createAgainstSupply(String key) {
+    return createAgainstSupply(key, key);
+  }
+
+  /*
+    === Instance methods ===
+   */
+
+  @Override
+  public boolean isNuisance() {
+    return true;
   }
 
   private void setWorksAgainst(Item worksAgainst) {

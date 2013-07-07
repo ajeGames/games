@@ -6,8 +6,9 @@ package com.ajegames.picnic;
 public class PreventionTest extends ItemTest {
 
   public void testCreatePrevention() {
-    Item picnicItem;Nuisance sunburn = Nuisance.create("Sunburn");
-    picnicItem = Prevention.createPrevention("Sunscreen", sunburn);
+    Item picnicItem;
+    Nuisance sunburn = Nuisance.createWipeOut("sunburn");
+    picnicItem = Prevention.createPrevention("sunscreen", sunburn);
     assertEquals("should be prevention", ItemType.PREVENTION, picnicItem.getType());
     assertFalse(picnicItem.isFood());
     assertFalse(picnicItem.isDrink());

@@ -14,37 +14,35 @@ public class PicnicSpinnerFactory {
     List<Item> items = Lists.newArrayList();
     for (SpinnerItemConfig item : config.getFoods()) {
       for (int i = 0; i < item.getWeight(); i++) {
-        items.add(Item.createFood(item.getKey()));
+        items.add(Item.createFood(item.getKey(), item.getDescription()));
       }
     }
     for (SpinnerItemConfig item : config.getDrinks()) {
       for (int i = 0; i < item.getWeight(); i++) {
-        items.add(Item.createDrink(item.getKey()));
+        items.add(Item.createDrink(item.getKey(), item.getDescription()));
       }
     }
     for (SpinnerItemConfig item : config.getSupplies()) {
       for (int i = 0; i < item.getWeight(); i++) {
-        items.add(Item.createSupply(item.getKey()));
+        items.add(Item.createSupply(item.getKey(), item.getDescription()));
       }
     }
     for (SpinnerItemConfig item : config.getNuisances()) {
-      Nuisance toAdd;
       for (int i = 0; i < item.getWeight(); i++) {
         if ("reducesFood".equals(item.getImpact())) {
-          toAdd = Nuisance.createAgainstFood(item.getKey());
+          items.add(Nuisance.createAgainstFood(item.getKey(), item.getDescription()));
         } else if ("wipeout".equals(item.getImpact())) {
-          toAdd = Nuisance.createWipeOut(item.getKey());
+          items.add(Nuisance.createWipeOut(item.getKey(), item.getDescription()));
         } else {
-          toAdd = Nuisance.create(item.getKey());
+          // add message to log that nuisance unsupported
         }
-        items.add(toAdd);
       }
     }
     for (SpinnerItemConfig item : config.getPreventions()) {
       for (int i = 0; i < item.getWeight(); i++) {
-        Item counteracts = ItemCatalog.instance().getItem(item.getCounteracts());
+        Item counteracts = ItemCatalog.getInstance().getItem(item.getCounteracts());
         if (counteracts instanceof Nuisance) {
-          items.add(Prevention.createPrevention(item.getKey(), (Nuisance) counteracts));
+          items.add(Prevention.createPrevention(item.getKey(), item.getDescription(), (Nuisance) counteracts));
         }
       }
     }

@@ -58,7 +58,7 @@ public class PlayerTest extends TestCase {
   }
 
   public void testHasPrevention() {
-    Nuisance rain = Nuisance.create("rain");
+    Nuisance rain = Nuisance.createWipeOut("rain");
     Prevention umbrella = Prevention.createPrevention("umbrella", rain);
 
     Player tester = genPlayer("Little Miss Sunshine");
@@ -67,15 +67,13 @@ public class PlayerTest extends TestCase {
   }
 
   public void testHasPreventionWhenPlayerHasNothing() {
-    Nuisance rain = Nuisance.create("rain");
-    Prevention umbrella = Prevention.createPrevention("umbrella", rain);
-
+    Nuisance rain = Nuisance.createWipeOut("rain");
     Player tester = genPlayer("Little Miss Sunshine");
     assertFalse("umbrella should prevent rain", tester.getBasket().hasPrevention(rain));
   }
 
   public void testHasPreventionWhenPlayerDoesNot() {
-    Nuisance rain = Nuisance.create("rain");
+    Nuisance rain = Nuisance.createWipeOut("rain");
 
     Player tester = genPlayer("Little Miss Sunshine");
     tester.gatherItem(Item.createDrink("sweet tea"));
@@ -92,7 +90,7 @@ public class PlayerTest extends TestCase {
     Item fruitJuice = Item.createDrink("fruit juice");
     Item maiTais = Item.createDrink("mai tais");
     Item napkins = Item.createSupply("napkins");
-    Item bugSpray = Prevention.createPrevention("bug spray", Nuisance.create("bugs"));
+    Item bugSpray = Prevention.createPrevention("bug spray", Nuisance.createWipeOut("bugs"));
 
     tester.gatherItem(peanuts);
     tester.gatherItem(popcorn);
@@ -154,7 +152,7 @@ public class PlayerTest extends TestCase {
     tester.gatherItem(Item.createFood("chicken"));
     tester.gatherItem(Item.createDrink("milk tea"));
     tester.gatherItem(Item.createSupply("forks"));
-    tester.gatherItem(Prevention.createPrevention("bug spray", Nuisance.create("mosquitos")));
+    tester.gatherItem(Prevention.createPrevention("bug spray", Nuisance.createWipeOut("mosquitos")));
     Basket basket = tester.getBasket();
     basket.empty();
     assertEquals(0, basket.getItemCount());

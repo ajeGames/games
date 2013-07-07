@@ -12,7 +12,7 @@ public class PicnicSpinnerTest extends TestCase {
 
   public void testCreateSpinner() {
     List<Item> itemsToAdd = Lists.newArrayList();
-    Nuisance rain = Nuisance.create("rain");
+    Nuisance rain = Nuisance.createWipeOut("rain");
     itemsToAdd.add(Item.createFood("hamburgers"));
     itemsToAdd.add(Item.createDrink("soda"));
     itemsToAdd.add(Item.createSupply("napkins"));

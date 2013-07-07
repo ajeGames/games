@@ -7,23 +7,27 @@ public class Prevention extends Item {
 
   private Nuisance counteracts;
 
-  private Prevention(String name) {
-    super(name, ItemType.PREVENTION);
+  private Prevention(String key, String description) {
+    super(key, description, ItemType.PREVENTION);
   }
 
-  public static Prevention createPrevention(String name, Nuisance counteracts) {
-    Prevention newPrevention = new Prevention(name);
+  public static Prevention createPrevention(String key, String description, Nuisance counteracts) {
+    Prevention newPrevention = new Prevention(key, description);
     newPrevention.setCounteracts(counteracts);
     return newPrevention;
   }
 
-  private void setCounteracts(Nuisance counteracts) {
-    this.counteracts = counteracts;
+  public static Prevention createPrevention(String key, Nuisance counteracts) {
+    return createPrevention(key, key, counteracts);
   }
 
   @Override
   public boolean isPrevention() {
     return true;
+  }
+
+  private void setCounteracts(Nuisance counteracts) {
+    this.counteracts = counteracts;
   }
 
   public Nuisance getCounteracts() {

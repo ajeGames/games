@@ -7,27 +7,45 @@ import com.ajegames.utility.BaseSpinnerOption;
  */
 public class Item extends BaseSpinnerOption {
 
+  private String description;
   private ItemType type;
 
-  protected Item(String name, ItemType type) {
-    super(name);
+  protected Item(String key, String description, ItemType type) {
+    super(key);
+    this.description = description;
     this.type = type;
   }
 
-  public static Item createPicnicItem(String name, ItemType type) {
-    return new Item(name, type);
+  public static Item createPicnicItem(String key, String description, ItemType type) {
+    return new Item(key, description, type);
   }
 
-  public static final Item createFood(String name) {
-    return createPicnicItem(name, ItemType.FOOD);
+  public static Item createFood(String key, String description) {
+    return createPicnicItem(key, description, ItemType.FOOD);
   }
 
-  public static Item createDrink(String name) {
-    return createPicnicItem(name, ItemType.DRINK);
+  public static Item createFood(String key) {
+    return createPicnicItem(key, key, ItemType.FOOD);
   }
 
-  public static Item createSupply(String name) {
-    return createPicnicItem(name, ItemType.SUPPLY);
+  public static Item createDrink(String key, String description) {
+    return createPicnicItem(key, description, ItemType.DRINK);
+  }
+
+  public static Item createDrink(String key) {
+    return createPicnicItem(key, key, ItemType.DRINK);
+  }
+
+  public static Item createSupply(String key, String description) {
+    return createPicnicItem(key, description, ItemType.SUPPLY);
+  }
+
+  public static Item createSupply(String key) {
+    return createPicnicItem(key, key, ItemType.SUPPLY);
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   public boolean isFood() {

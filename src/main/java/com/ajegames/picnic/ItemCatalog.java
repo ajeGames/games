@@ -5,17 +5,20 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * Created for AJE Games by bigdaddy on 6/22/13 at 5:32 PM.
+ * Holds all of the available picnic items.
  */
 public class ItemCatalog {
 
-  private static ItemCatalog singleton = new ItemCatalog();
-
-  public static ItemCatalog instance() {
-    return singleton;
-  }
+  private static ItemCatalog instance;
 
   private Map<String, Item> spinnerItems = Maps.newHashMap();
+
+  synchronized public static ItemCatalog getInstance() {
+    if (instance == null) {
+      instance = new ItemCatalog();
+    }
+    return instance;
+  }
 
   public Item getItem(String key) {
     return spinnerItems.get(key);
