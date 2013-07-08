@@ -1,5 +1,6 @@
 package com.ajegames.picnic.service;
 
+import com.ajegames.picnic.health.SpinnerHealthCheck;
 import com.ajegames.picnic.service.resource.GameResource;
 import com.ajegames.picnic.service.resource.PicnicResource;
 import com.ajegames.picnic.service.resource.PlayerResource;
@@ -29,5 +30,7 @@ public class PicnicService extends Service<PicnicConfiguration> {
     environment.addResource(new PicnicResource());
     environment.addResource(new PlayerResource());
     environment.addResource(new GameResource());
+
+    environment.addHealthCheck(new SpinnerHealthCheck());
   }
 }

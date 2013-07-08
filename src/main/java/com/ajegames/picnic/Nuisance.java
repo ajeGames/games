@@ -8,6 +8,7 @@ public class Nuisance extends Item {
   private Item worksAgainst;
   private ItemType worksAgainstType;
   private boolean wipeOut;
+  private boolean loseTurn;
 
   private Nuisance(String key, String description) {
     super(key, description, ItemType.NUISANCE);
@@ -25,6 +26,16 @@ public class Nuisance extends Item {
 
   public static Nuisance createWipeOut(String key) {
     return createWipeOut(key, key);
+  }
+
+  public static Nuisance createLoseTurn(String key, String description) {
+    Nuisance newNuisance = new Nuisance(key, description);
+    newNuisance.loseTurn = true;
+    return newNuisance;
+  }
+
+  public static Nuisance createLoseTurn(String key) {
+    return createLoseTurn(key, key);
   }
 
   public static Nuisance createAgainstItem(String key, String description, Item itemToCounteract) {
@@ -102,5 +113,9 @@ public class Nuisance extends Item {
 
   public boolean isWipeOut() {
     return wipeOut;
+  }
+
+  public boolean isLoseTurn() {
+    return loseTurn;
   }
 }

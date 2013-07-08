@@ -12,6 +12,10 @@ import java.util.List;
  */
 public class PicnicSpinnerFactory {
 
+  public static String IMPACT_LOSE_FOOD = "reduces-food";
+  public static String IMPACT_LOSE_TURN = "lose-turn";
+  public static String IMPACT_WIPEOUT = "wipeout";
+
   private static Logger LOG = LoggerFactory.getLogger(PicnicSpinnerFactory.class);
 
   synchronized public static void configureSpinner(SpinnerConfiguration config) {
@@ -32,10 +36,12 @@ public class PicnicSpinnerFactory {
       addToCatalogAndSpinnerWithWeight(spinnerOptions, toAdd, item.getWeight());
     }
     for (SpinnerItemConfig item : config.getNuisances()) {
-      if ("reducesFood".equals(item.getImpact())) {
+      if (IMPACT_LOSE_FOOD.equals(item.getImpact())) {
         toAdd = Nuisance.createAgainstFood(item.getKey(), item.getDescription());
-      } else if ("wipeout".equals(item.getImpact())) {
+      } else if (IMPACT_WIPEOUT.equals(item.getImpact())) {
         toAdd = Nuisance.createWipeOut(item.getKey(), item.getDescription());
+      } else if (IMPACT_LOSE_TURN.equals(item.getImpact())) {
+        toAdd = Nuisance.createLoseTurn(item.getKey(), item.getDescription());
       } else {
         LOG.warn("Problem with spinner configuration: impact '" + item.getImpact() + "' is not recognized.");
         continue;
