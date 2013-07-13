@@ -1,5 +1,6 @@
 package com.ajegames.picnic;
 
+import com.ajegames.picnic.repository.PlayerRepository;
 import junit.framework.TestCase;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public class PlayerTest extends TestCase {
 
   private Player genPlayer(String name) {
-    return new Player(name);
+    return Player.createPlayer("key", 0l, name);
   }
 
   public void testCreatePlayer() {

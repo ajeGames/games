@@ -14,12 +14,16 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerResource {
 
+  // TODO return player document, which will be more complex than just player data; include resource URIs
+
+  @GET
+  public Player getPlayer() {
+    return PlayerRepository.findPlayer("TODO pull key out of query");
+  }
+
   @POST
   @Timed
   public Player createPlayer(@FormParam("playerName") String name) {
-    PlayerRepository playerRepo = PlayerRepository.getInstance();
-    Player player = new Player(name);
-    playerRepo.addPlayer(player);
-    return player;
+    return PlayerRepository.createPlayer(name);
   }
 }

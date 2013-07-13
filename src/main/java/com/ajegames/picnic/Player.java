@@ -1,17 +1,34 @@
 package com.ajegames.picnic;
 
+import com.ajegames.picnic.repository.PersistedGameEntity;
+
 /**
  * Someone playing Picnic.  Player holds a basket that must be filled sufficiently to win.
  */
-public class Player {
+public class Player implements PersistedGameEntity {
 
+  private String key;
   private long id;
-  private final String name;
+  private String name;
   private Basket basket;
 
-  public Player(String playerName) {
-    name = playerName;
+  public static Player createPlayer(String key, long id, String playerName) {
+    return new Player(key, id, playerName);
+  }
+
+  private Player(String key, long id, String playerName) {
+    this.key = key;
+    this.id = id;
+    this.name = playerName;
+    emptyBasket();
+  }
+
+  private void emptyBasket() {
     basket = new Basket();
+  }
+
+  public String getKey() {
+    return key;
   }
 
   public long getId() {
