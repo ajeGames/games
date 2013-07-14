@@ -1,9 +1,12 @@
 package com.ajegames.picnic;
 
-import com.ajegames.utility.SpinnerOption;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>This is the game Picnic.  The objective is to gather a sufficient level of certain picnic items in order to have a
@@ -16,33 +19,44 @@ import java.util.List;
  */
 public class Picnic {
 
-  List<Player> players = Lists.newArrayList();
-  int indexCurrentPlayer = -1;
-  PicnicSpinner spinner;
-  boolean winner;
-
+  private static final Logger LOG = LoggerFactory.getLogger(Picnic.class);
   private static final int REQUIRED_FOOD_COUNT = 3;
   private static final int REQUIRED_DRINK_COUNT = 2;
   private static final int REQUIRED_SUPPLY_COUNT = 1;
 
+  PicnicSpinner spinner;
+  List<Player> players;
+  Map<String, Basket> baskets;
+  int indexCurrentPlayer;
+  boolean winner;
+
   public Picnic() {
+    initialize();
+  }
+
+  private void initialize() {
     this.spinner = PicnicSpinner.createInstance();
+    this.players = Lists.newArrayList();
+    this.baskets = Maps.newHashMap();
+    indexCurrentPlayer = -1;
+
   }
 
   public void addPlayer(Player player) {
-    print("Adding player " + player.getName() + ".");
+    LOG.info("Adding player " + player.getName() + ".");
     players.add(player);
+    baskets.put(player.getKey(), new Basket());
   }
 
   public void play() {
     // take turn; continue until player wins
-    print("\nAnd here we go...");
-    print("\n==Play by play==");
+    LOG.debug("\nAnd here we go...");
+    LOG.debug("\n==Play by play==");
     do {
       advanceCurrentPlayer();
       takeTurn();
     } while (!winner());
-    print("\nThe winner is " + players.get(indexCurrentPlayer).getName() + "!!!\n");
+    LOG.info("\nThe winner is " + players.get(indexCurrentPlayer).getName() + "!!!\n");
   }
 
   public void advanceCurrentPlayer() {
@@ -59,41 +73,37 @@ public class Picnic {
 
   private void takeTurn() {
     Player currentPlayer = players.get(indexCurrentPlayer);
-    SpinnerOption selectedItem = spinner.spin();
+    Basket currentBasket = baskets.get(currentPlayer.getKey());
 
-    if (selectedItem instanceof Item) {
-      if (!((Item) selectedItem).isNuisance()) {
-        currentPlayer.gatherItem((Item) selectedItem);
-      }
-      else {
+    boolean settled;
+    do {
+      settled = true;  // only exception is when nuisance picked while prevention is held
+      Item selectedItem = spinner.spin();
+      LOG.info("Spinner is pointing to " + selectedItem.getDescription());
+      if (!selectedItem.isNuisance()) {
+        currentBasket.gatherItem(selectedItem);
+      } else {
         Nuisance aProblem = (Nuisance) selectedItem;
-        if (!currentPlayer.getBasket().hasPrevention(aProblem)) {
-          print("==X Do something dastardly to " + currentPlayer.getName() + " due to " + aProblem.getValue());
-
+        if (!currentBasket.hasPrevention(aProblem)) {
           if (aProblem.isAgainstItem()) {
-            currentPlayer.getBasket().removeItem(aProblem.getWorksAgainst());
+            currentBasket.removeItem(aProblem.getWorksAgainst());
           } else if (aProblem.isAgainstItemType()) {
-            currentPlayer.getBasket().removeItemOfType(aProblem.getWorksAgainstType());
+            currentBasket.removeItemOfType(aProblem.getWorksAgainstType());
           } else if (aProblem.isWipeOut()) {
-            currentPlayer.getBasket().empty();
+            currentBasket.empty();
           }
         } else {
-          print("==O Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
+          LOG.info("Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
+          settled = false;
         }
       }
-    }
-    print("* " + currentPlayer.toString());
+    } while (!settled);
 
     // decide if winner
-    if (currentPlayer.getBasket().getFoodCount() >= REQUIRED_FOOD_COUNT
-            && currentPlayer.getBasket().getDrinkCount() >= REQUIRED_DRINK_COUNT
-            && currentPlayer.getBasket().getSupplyCount() >= REQUIRED_SUPPLY_COUNT) {
+    if (currentBasket.getFoodCount() >= REQUIRED_FOOD_COUNT
+            && currentBasket.getDrinkCount() >= REQUIRED_DRINK_COUNT
+            && currentBasket.getSupplyCount() >= REQUIRED_SUPPLY_COUNT) {
       winner = true;
     }
   }
-
-  private void print(String s) {
-    System.out.println(s);
-  }
-
 }

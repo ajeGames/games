@@ -22,6 +22,7 @@ public class BaseRepository {
   private Map<String, PersistedGameEntity> entities = Maps.newHashMap();
 
   public static String generateUniqueKey(String[] parts) {
+    // TODO improve key generation
     String random = String.valueOf(Math.random());
     String basis = random.substring(2, (random.length() >= 16 ? 16 : random.length()));  // had trouble going out of bounds on substring
     for (String part : parts) {

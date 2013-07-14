@@ -36,7 +36,7 @@ public class PlayerRepository extends BaseRepository {
 
   synchronized public static Player createPlayer(String name) {
     String key = BaseRepository.generateUniqueKey(new String[] { String.valueOf(nextID), name });
-    Player player = Player.createPlayer(key, nextID++, name);
+    Player player = Player.createPlayer(key, name);
     PlayerRepository.getInstance().addPlayer(player);
     return player;
   }
