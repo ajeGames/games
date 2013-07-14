@@ -25,6 +25,6 @@ public class GameState {
   }
 
   public String getStatus() {
-    return "not implemented";
+    return game.getStatus().toString();
   }
 }

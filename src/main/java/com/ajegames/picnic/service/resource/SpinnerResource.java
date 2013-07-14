@@ -1,7 +1,6 @@
 package com.ajegames.picnic.service.resource;
 
 import com.ajegames.picnic.Picnic;
-import com.ajegames.picnic.Player;
 import com.ajegames.picnic.repository.KeyGenerator;
 import com.google.common.collect.Maps;
 import com.yammer.metrics.annotation.Timed;
@@ -10,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Map;
 
 /**
@@ -29,9 +29,16 @@ public class SpinnerResource extends BasePicnicResource {
                              @QueryParam("playerKey") String playerKey) {
     LOG.info("Invoked getSpinToken with gameKey=" + gameKey + " and playerKey=" + playerKey);
     Picnic game = getGame(gameKey);
-    Player player = getPlayer(playerKey);
-    LOG.warn("This is not yet implemented correctly.");
-    return KeyGenerator.generateKey(8);
+    if (!game.isPlaying()) {
+      LOG.warn("Someone tried to get a spin token for game that is " + (game.isGameOver() ? "over." : "in staging."));
+      throw new WebApplicationException(Response.Status.BAD_REQUEST);
+    }
+    if (!game.isCurrentPlayer(playerKey)) {
+      throw new WebApplicationException(Response.Status.NOT_FOUND);
+    }
+    String spinToken = KeyGenerator.generateKey(8);
+    pendingSpins.put(spinToken, game);
+    return spinToken;
   }
 
 /*
@@ -48,29 +55,10 @@ public class SpinnerResource extends BasePicnicResource {
   @Timed
   public String spin(@PathParam("spinToken") String spinToken) {
     LOG.info("Invoked spin with spinToken=" + spinToken);
-    LOG.warn("This is not yet implemented correctly.");
-    // TODO use spin token to access the game and spin the correct spinner
-    return consumeSpinToken(spinToken);
+    Picnic game = pendingSpins.remove(spinToken);
+    if (game == null) {
+      throw new WebApplicationException(Response.Status.NOT_FOUND);
+    }
+    return game.takeTurn();  // take a turn
   }
-
-  /**
-   * Returns spin token for given player if that player's turn is up.  Returns null if not player's turn.
-   *
-   * @param playerKey
-   * @return
-   */
-  private String issueSpinToken(String playerKey) {
-    return null;
-  }
-
-  /**
-   * Uses spin token and returns the spin results.
-   *
-   * @param token
-   * @return
-   */
-  private String consumeSpinToken(String token) {
-    return null;
-  }
-
 }

@@ -46,11 +46,23 @@ public class GameResource extends BasePicnicResource {
   }
 
   @PUT
+  @Path("{gameKey}/play")
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Timed
+  public GameState play(@PathParam("gameKey") String gameKey) {
+    LOG.info("Invoked play with gameKey=" + gameKey);
+    Picnic game = GameRepository.findGame(gameKey);
+    game.play();
+    return buildGameState(game);
+  }
+
+  @PUT
   @Path("{gameKey}")
   @Produces(MediaType.APPLICATION_JSON)
   @Timed
   public GameState joinGame(@PathParam("gameKey") String gameKey,
-                         @FormParam("playerKey") String playerKey) {
+                            @FormParam("playerKey") String playerKey) {
     LOG.info("Invoked joinGame with gameKey=" + gameKey + " and playerKey=" + playerKey);
     Picnic game = getGame(gameKey);
     Player player = getPlayer(playerKey);

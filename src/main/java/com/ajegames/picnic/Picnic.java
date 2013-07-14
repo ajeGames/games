@@ -26,6 +26,7 @@ public class Picnic implements PersistedGameEntity {
   private static final int REQUIRED_SUPPLY_COUNT = 1;
 
   String key;
+  PicnicGameStatus status;
   PicnicSpinner spinner;
   List<Player> players;
   Map<String, Basket> baskets;
@@ -42,6 +43,7 @@ public class Picnic implements PersistedGameEntity {
 
   private void initialize(String key) {
     this.key = key;
+    this.status = PicnicGameStatus.STAGING;
     this.spinner = PicnicSpinner.createInstance();
     this.players = Lists.newArrayList();
     this.baskets = Maps.newHashMap();
@@ -59,41 +61,54 @@ public class Picnic implements PersistedGameEntity {
     baskets.put(player.getKey(), new Basket());
   }
 
-  public void play() {
-    // take turn; continue until player wins
-    LOG.debug("\nAnd here we go...");
-    LOG.debug("\n==Play by play==");
-    do {
-      advanceCurrentPlayer();
-      takeTurn();
-    } while (!winner());
-    LOG.info("\nThe winner is " + players.get(indexCurrentPlayer).getName() + "!!!\n");
-  }
-
-  public void advanceCurrentPlayer() {
-    indexCurrentPlayer = ++indexCurrentPlayer % players.size();
-  }
-
-  public PicnicSpinner getSpinner() {
-    return spinner;
-  }
-
   public List<Player> getPlayers() {
     return players;
   }
 
-  private boolean winner() {
-    return winner;
+  public boolean isCurrentPlayer(String playerKey) {
+    return playerKey.equals(getCurrentPlayer().getKey());
   }
 
-  private void takeTurn() {
+  private Player getCurrentPlayer() {
+    return players.get(indexCurrentPlayer);
+  }
+
+  private void advanceCurrentPlayer() {
+    indexCurrentPlayer = ++indexCurrentPlayer % players.size();
+  }
+
+  public PicnicGameStatus getStatus() {
+    return status;
+  }
+
+  public boolean isPlaying() {
+    return status.equals(PicnicGameStatus.PLAYING);
+  }
+
+  public boolean isGameOver() {
+    return status.equals(PicnicGameStatus.GAME_OVER);
+  }
+
+  /**
+   * Points to first player and changes game status to "playing..."
+   */
+  public void play() {
+    advanceCurrentPlayer();
+    status = PicnicGameStatus.PLAYING;
+  }
+
+  public String takeTurn() {
+    if (!isPlaying()) {
+      LOG.warn("Someone tried to take a turn during staging or after game over.");
+      return "";
+    }
     Player currentPlayer = players.get(indexCurrentPlayer);
     Basket currentBasket = baskets.get(currentPlayer.getKey());
-
+    Item selectedItem;
     boolean settled;
     do {
       settled = true;  // only exception is when nuisance picked while prevention is held
-      Item selectedItem = spinner.spin();
+      selectedItem = spinner.spin();
       LOG.info("Spinner is pointing to " + selectedItem.getDescription());
       if (!selectedItem.isNuisance()) {
         currentBasket.gatherItem(selectedItem);
@@ -109,6 +124,7 @@ public class Picnic implements PersistedGameEntity {
           }
         } else {
           LOG.info("Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
+          // TODO make it so player can see that the prevention helped
           settled = false;
         }
       }
@@ -118,7 +134,10 @@ public class Picnic implements PersistedGameEntity {
     if (currentBasket.getFoodCount() >= REQUIRED_FOOD_COUNT
             && currentBasket.getDrinkCount() >= REQUIRED_DRINK_COUNT
             && currentBasket.getSupplyCount() >= REQUIRED_SUPPLY_COUNT) {
-      winner = true;
+      status = PicnicGameStatus.GAME_OVER;
+    } else {
+      advanceCurrentPlayer();
     }
+    return selectedItem.getValue();
   }
 }
