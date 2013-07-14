@@ -1,18 +1,13 @@
 package com.ajegames.picnic.repository;
 
-import com.ajegames.picnic.Picnic;
 import com.ajegames.picnic.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Created for AJE Games by bigdaddy on 5/5/13 at 9:29 PM.
- */
 public class PlayerRepository extends BaseRepository {
 
+  private static final Logger LOG = LoggerFactory.getLogger(PlayerRepository.class);
   private static PlayerRepository instance;
-  private static long nextID = 0;
 
   private static PlayerRepository getInstance() {
     if (instance == null) {
@@ -34,8 +29,17 @@ public class PlayerRepository extends BaseRepository {
     this.addEntity(player);
   }
 
+  private static String generateUniqueKey() {
+    String key;
+    do {
+      key = KeyGenerator.generateKey(16);
+    } while (getInstance().getEntities().containsKey(key));
+    LOG.debug("Generated key " + key);
+    return key;
+  }
+
   synchronized public static Player createPlayer(String name) {
-    String key = BaseRepository.generateUniqueKey(new String[] { String.valueOf(nextID), name });
+    String key = PlayerRepository.generateUniqueKey();
     Player player = Player.createPlayer(key, name);
     PlayerRepository.getInstance().addPlayer(player);
     return player;

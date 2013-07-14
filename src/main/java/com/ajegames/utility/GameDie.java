@@ -14,8 +14,9 @@ public class GameDie implements Comparable<GameDie> {
     this.roll();
   }
 
-  public void roll() {
+  public int roll() {
     value = new Double(Math.random() * sides).intValue() + 1;
+    return value;
   }
 
   public int getSides() {
@@ -32,7 +33,6 @@ public class GameDie implements Comparable<GameDie> {
   }
 
   public String toString() {
-    return new StringBuilder("Sides:").append(sides).append(" (Rolled:")
-            .append(value).append(")  ").toString();
+    return "Sides:" + sides + " (Rolled:" + value + ")  ";
   }
 }
