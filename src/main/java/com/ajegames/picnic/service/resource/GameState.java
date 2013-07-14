@@ -2,6 +2,7 @@ package com.ajegames.picnic.service.resource;
 
 import com.ajegames.picnic.Picnic;
 import com.ajegames.picnic.Player;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -20,8 +21,22 @@ public class GameState {
     return game.getKey();
   }
 
+  public String getCurrentPlayer() {
+    return game.getCurrentPlayer().getKey();
+  }
+
+/*
   public List<Player> getPlayers() {
     return game.getPlayers();
+  }
+*/
+
+  public List<PlayerGameState> getPlayers() {
+    List<PlayerGameState> playerStates = Lists.newArrayList();
+    for (Player pl : game.getPlayers()) {
+      playerStates.add(new PlayerGameState(game, pl));
+    }
+    return playerStates;
   }
 
   public String getStatus() {

@@ -65,11 +65,18 @@ public class Picnic implements PersistedGameEntity {
     return players;
   }
 
+  public Basket getBasket(String playerKey) {
+    return baskets.get(playerKey);
+  }
+
   public boolean isCurrentPlayer(String playerKey) {
     return playerKey.equals(getCurrentPlayer().getKey());
   }
 
-  private Player getCurrentPlayer() {
+  public Player getCurrentPlayer() {
+    if (indexCurrentPlayer < 0) {
+      return Player.NO_PLAYER;
+    }
     return players.get(indexCurrentPlayer);
   }
 

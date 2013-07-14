@@ -7,6 +7,8 @@ import com.ajegames.picnic.repository.PersistedGameEntity;
  */
 public class Player implements PersistedGameEntity {
 
+  public static final Player NO_PLAYER = createPlayer("noone", "Mr. Nobody");
+
   private String key;
   private String name;
 
