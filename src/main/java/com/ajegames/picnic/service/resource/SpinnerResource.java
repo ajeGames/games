@@ -4,6 +4,7 @@ import com.ajegames.picnic.Picnic;
 import com.ajegames.picnic.Player;
 import com.ajegames.picnic.repository.KeyGenerator;
 import com.google.common.collect.Maps;
+import com.yammer.metrics.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +22,9 @@ public class SpinnerResource extends BasePicnicResource {
   private static Map<String, Picnic> pendingSpins = Maps.newHashMap();
 
   @GET
-  @PathParam("/{gameKey}")
+  @Path("{gameKey}")
   @Produces(MediaType.APPLICATION_JSON)
+  @Timed
   public String getSpinToken(@PathParam("gameKey") String gameKey,
                              @QueryParam("playerKey") String playerKey) {
     LOG.info("Invoked getSpinToken with gameKey=" + gameKey + " and playerKey=" + playerKey);
@@ -41,8 +43,9 @@ public class SpinnerResource extends BasePicnicResource {
 */
 
   @POST
-  @PathParam("/{spinToken}")
+  @Path("{spinToken}")
   @Produces(MediaType.APPLICATION_JSON)
+  @Timed
   public String spin(@PathParam("spinToken") String spinToken) {
     LOG.info("Invoked spin with spinToken=" + spinToken);
     LOG.warn("This is not yet implemented correctly.");

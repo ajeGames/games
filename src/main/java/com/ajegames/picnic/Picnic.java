@@ -78,6 +78,10 @@ public class Picnic implements PersistedGameEntity {
     return spinner;
   }
 
+  public List<Player> getPlayers() {
+    return players;
+  }
+
   private boolean winner() {
     return winner;
   }

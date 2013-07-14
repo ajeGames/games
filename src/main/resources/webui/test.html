@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Picnic Test Page</title>
+</head>
+<body>
+
+<p>Hi! Want to play Picnic?</p>
+<form action="/service/picnic/player" method="POST">
+  <label for="playerName">Player name:</label> <input type="text" name="playerName" id="playerName"/>
+  <input type="submit" value="Add Player"/>
+</form>
+
+<form action="/service/picnic/game" method="POST">
+  <label for="playerKey">Player name:</label> <input type="text" name="playerKey" id="playerKey"/>
+  <input type="submit" value="Start Game"/>
+</form>
+
+</body>
+</html>

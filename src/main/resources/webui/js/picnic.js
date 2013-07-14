@@ -8,7 +8,7 @@ $(document).ready(function() {
                 playerName: $("#playerName").val()
             },
             function(data, status) {
-                $("#playerID").text(data.id);
+                $("#playerKey").text(data.playerKey);
             });
     });
 
