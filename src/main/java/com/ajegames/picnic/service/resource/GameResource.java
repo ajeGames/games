@@ -1,55 +1,55 @@
 package com.ajegames.picnic.service.resource;
 
-import com.ajegames.picnic.*;
+import com.ajegames.picnic.Picnic;
+import com.ajegames.picnic.Player;
 import com.ajegames.picnic.repository.GameRepository;
-import com.ajegames.picnic.service.SpinnerItemConfig;
-import com.ajegames.picnic.service.SpinnerConfiguration;
+import com.ajegames.picnic.repository.PlayerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-/**
- * Created for AJE Games by bigdaddy on 5/5/13 at 8:54 PM.
- */
 @Path("/picnic/game")
-public class GameResource {
+public class GameResource extends BasePicnicResource {
 
-  public GameResource() {
-  }
+  private static Logger LOG = LoggerFactory.getLogger(GameResource.class);
 
   @GET
-  @PathParam("/{gameID}")
+  @PathParam("/{gameKey}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Picnic getGame() {
-    String gameID = "blah";
-    Picnic game = GameRepository.getInstance().findGame(gameID);
+  public Picnic showGame(@PathParam("gameKey") String gameKey) {
+    LOG.info("Invoked showGame with gameKey=" + gameKey);
+    Picnic game = GameRepository.findGame(gameKey);
     if (game == null) {
-      // TODO reply with 404
+      throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
-    return game;  // TODO use representation to convert to JSON
+    return game;
   }
 
-/*
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  public String startGame(@FormParam("playerID") String playerID) {
-    Picnic game = new Picnic();
-    Player player = PlayerRepository.getInstance().getPlayer(playerID);
+  public Picnic startGame(@QueryParam("playerKey") String playerKey) {
+    LOG.info("Invoked startGame with playerKey=" + playerKey);
+    Player player = getPlayer(playerKey);
+    Picnic game = GameRepository.createGame();
+    if (game == null) {
+      throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+    }
     game.addPlayer(player);
-    return GameRepository.getInstance().addGame(game);
+    return game;
   }
-*/
 
-  @POST
+  @PUT
+  @PathParam("/{gameKey}")
   @Produces(MediaType.APPLICATION_JSON)
-  public String spin() {
-
-    // TODO use hash to id games
-    Picnic myGame = GameRepository.getInstance().findGame("test");
-    if (myGame == null) {
-      myGame = new Picnic();
-      GameRepository.getInstance().putGame("test", myGame);
-    }
-    return myGame.getSpinner().spin().getValue();
+  public Picnic joinGame(@PathParam("gameKey") String gameKey,
+                         @QueryParam("playerKey") String playerKey) {
+    LOG.info("Invoked joinGame with gameKey=" + gameKey + " and playerKey=" + playerKey);
+    Picnic game = getGame(gameKey);
+    Player player = getPlayer(playerKey);
+    game.addPlayer(player);
+    return game;
   }
 }

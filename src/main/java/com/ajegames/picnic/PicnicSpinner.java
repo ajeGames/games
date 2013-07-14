@@ -44,6 +44,12 @@ public class PicnicSpinner {
 
   private PicnicSpinner() {}
 
+/*
+  public static List<Item> getSpinnerOptions() {
+    List<> options = spinner.getOptions();
+  }
+*/
+
   public Item spin() {
     Item selected = (Item) spinner.spin();
     history.add(0, selected);

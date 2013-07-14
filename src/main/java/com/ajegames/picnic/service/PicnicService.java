@@ -4,6 +4,7 @@ import com.ajegames.picnic.health.SpinnerHealthCheck;
 import com.ajegames.picnic.service.resource.GameResource;
 import com.ajegames.picnic.service.resource.PicnicResource;
 import com.ajegames.picnic.service.resource.PlayerResource;
+import com.ajegames.picnic.service.resource.SpinnerResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
@@ -30,6 +31,7 @@ public class PicnicService extends Service<PicnicConfiguration> {
     environment.addResource(new PicnicResource());
     environment.addResource(new PlayerResource());
     environment.addResource(new GameResource());
+    environment.addResource(new SpinnerResource());
 
     environment.addHealthCheck(new SpinnerHealthCheck());
   }

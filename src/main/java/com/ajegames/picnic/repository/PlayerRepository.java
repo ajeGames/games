@@ -9,11 +9,24 @@ public class PlayerRepository extends BaseRepository {
   private static final Logger LOG = LoggerFactory.getLogger(PlayerRepository.class);
   private static PlayerRepository instance;
 
+  private PlayerRepository() {}
+
   private static PlayerRepository getInstance() {
     if (instance == null) {
       instance = new PlayerRepository();
     }
     return instance;
+  }
+
+  synchronized public static Player createPlayer(String name) {
+    String key = PlayerRepository.generateUniqueKey();
+    Player player = Player.createPlayer(key, name);
+    PlayerRepository.getInstance().addPlayer(player);
+    return player;
+  }
+
+  synchronized public static Player findPlayer(String key) {
+    return PlayerRepository.getInstance().getPlayer(key);
   }
 
   private Player getPlayer(String key) {
@@ -36,16 +49,5 @@ public class PlayerRepository extends BaseRepository {
     } while (getInstance().getEntities().containsKey(key));
     LOG.debug("Generated key " + key);
     return key;
-  }
-
-  synchronized public static Player createPlayer(String name) {
-    String key = PlayerRepository.generateUniqueKey();
-    Player player = Player.createPlayer(key, name);
-    PlayerRepository.getInstance().addPlayer(player);
-    return player;
-  }
-
-  synchronized public static Player findPlayer(String key) {
-    return PlayerRepository.getInstance().getPlayer(key);
   }
 }

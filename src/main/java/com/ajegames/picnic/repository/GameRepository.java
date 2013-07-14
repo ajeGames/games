@@ -1,18 +1,15 @@
 package com.ajegames.picnic.repository;
 
 import com.ajegames.picnic.Picnic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+public class GameRepository extends BaseRepository {
 
-/**
- * Created for AJE Games by bigdaddy on 5/5/13 at 9:15 PM.
- */
-public class GameRepository {
-
+  private static final Logger LOG = LoggerFactory.getLogger(GameRepository.class);
   private static GameRepository instance;
-  private long nextID = 0;
-  private Map<String, Picnic> games;
+
+  private GameRepository() {}
 
   synchronized public static GameRepository getInstance() {
     if (instance == null) {
@@ -21,22 +18,36 @@ public class GameRepository {
     return instance;
   }
 
-  private GameRepository() {
-    games = new HashMap<String, Picnic>();
+  synchronized public static Picnic createGame() {
+    String key = GameRepository.generateUniqueKey();
+    Picnic game = Picnic.createInstance(key);
+    GameRepository.getInstance().addGame(game);
+    return game;
   }
 
-  public Picnic findGame(String id) {
-    return games.get(id);
+  synchronized public static Picnic findGame(String key) {
+    return GameRepository.getInstance().getGame(key);
   }
 
-  synchronized public String addGame(Picnic gameInstance) {
-    String nextIDStr = Long.toString(nextID++);
-    games.put(nextIDStr, gameInstance);
-    return nextIDStr;
+  private Picnic getGame(String key) {
+    Object result = getEntities().get(key);
+    if (result == null) {
+      return null;
+    } else {
+      return (Picnic) result;
+    }
   }
 
-  public String putGame(String id, Picnic gameInstance) {
-    games.put(id, gameInstance);
-    return id;
+  private void addGame(Picnic player) {
+    this.addEntity(player);
+  }
+
+  private static String generateUniqueKey() {
+    String key;
+    do {
+      key = KeyGenerator.generateKey(16);
+    } while (getInstance().getEntities().containsKey(key));
+    LOG.debug("Generated key " + key);
+    return key;
   }
 }

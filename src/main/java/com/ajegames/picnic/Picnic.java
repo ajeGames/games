@@ -1,5 +1,6 @@
 package com.ajegames.picnic;
 
+import com.ajegames.picnic.repository.PersistedGameEntity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -17,29 +18,39 @@ import java.util.Map;
  * <p>This set of rules lends itself to being completely computer driven.  That is, the game relies entirely on luck.
  * Other versions of the rules may be coded in the future that require additional levels of skill.</p>
  */
-public class Picnic {
+public class Picnic implements PersistedGameEntity {
 
   private static final Logger LOG = LoggerFactory.getLogger(Picnic.class);
   private static final int REQUIRED_FOOD_COUNT = 3;
   private static final int REQUIRED_DRINK_COUNT = 2;
   private static final int REQUIRED_SUPPLY_COUNT = 1;
 
+  String key;
   PicnicSpinner spinner;
   List<Player> players;
   Map<String, Basket> baskets;
   int indexCurrentPlayer;
   boolean winner;
 
-  public Picnic() {
-    initialize();
+  public static Picnic createInstance(String key) {
+    Picnic out = new Picnic();
+    out.initialize(key);
+    return out;
   }
 
-  private void initialize() {
+  private Picnic() {}
+
+  private void initialize(String key) {
+    this.key = key;
     this.spinner = PicnicSpinner.createInstance();
     this.players = Lists.newArrayList();
     this.baskets = Maps.newHashMap();
     indexCurrentPlayer = -1;
 
+  }
+
+  public String getKey() {
+    return key;
   }
 
   public void addPlayer(Player player) {

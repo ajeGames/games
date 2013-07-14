@@ -14,13 +14,14 @@ import javax.ws.rs.core.Response;
  */
 @Path("/picnic/player")
 @Produces(MediaType.APPLICATION_JSON)
-public class PlayerResource {
+public class PlayerResource extends BasePicnicResource {
 
   // TODO return player document, which will be more complex than just player data; include resource URIs
 
   @GET
-  public Player getPlayer(@QueryParam("key") String key) {
-    return PlayerRepository.findPlayer(key);
+  @PathParam("/{playerKey}")
+  public Player getPlayer(@PathParam("playerKey") String playerKey) {
+    return getPlayer(playerKey);
   }
 
   @POST
