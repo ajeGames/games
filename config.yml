@@ -59,7 +59,7 @@ spinner:
         counteracts: sunburn
       - key: bugspray
         description: "Bug Spray"
-        counteracts: ants, blackflies
+        counteracts: ants
       - key: umbrella
         description: Umbrella
         counteracts: rain

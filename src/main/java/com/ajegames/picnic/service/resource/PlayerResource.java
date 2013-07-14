@@ -3,9 +3,11 @@ package com.ajegames.picnic.service.resource;
 import com.ajegames.picnic.Player;
 import com.ajegames.picnic.repository.PlayerRepository;
 import com.yammer.metrics.annotation.Timed;
+import org.eclipse.jetty.http.HttpStatus;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created for AJE Games by bigdaddy on 5/4/13 at 4:30 PM.
@@ -17,13 +19,16 @@ public class PlayerResource {
   // TODO return player document, which will be more complex than just player data; include resource URIs
 
   @GET
-  public Player getPlayer() {
-    return PlayerRepository.findPlayer("TODO pull key out of query");
+  public Player getPlayer(@QueryParam("key") String key) {
+    return PlayerRepository.findPlayer(key);
   }
 
   @POST
   @Timed
   public Player createPlayer(@FormParam("playerName") String name) {
+    if (name == null) {
+      throw new WebApplicationException(Response.Status.BAD_REQUEST);
+    }
     return PlayerRepository.createPlayer(name);
   }
 }

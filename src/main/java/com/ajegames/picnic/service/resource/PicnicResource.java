@@ -23,7 +23,7 @@ public class PicnicResource {
   public String getInfo() {
     return "<p>Hi! Want to play Picnic?</p>"
             + "<form action=\"/service/picnic/player\" method=\"POST\">"
-            + "<input type=\"text\" name=\"name\"/> <label for=\"name\">Player name: </label>"
+            + "<input type=\"text\" name=\"playerName\"/> <label for=\"playerName\">Player name: </label>"
             + "<input type=\"submit\" value=\"Add Player\"/></form>";
   }
 

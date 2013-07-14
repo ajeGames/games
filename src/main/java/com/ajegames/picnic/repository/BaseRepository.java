@@ -7,6 +7,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 /**
@@ -21,18 +22,19 @@ public class BaseRepository {
   private Map<String, PersistedGameEntity> entities = Maps.newHashMap();
 
   public static String generateUniqueKey(String[] parts) {
-
-    // TODO come up with good way to obfuscate key
-
-    String basis = DateTime.now().toString(formatter);
+    String random = String.valueOf(Math.random());
+    String basis = random.substring(2, (random.length() >= 16 ? 16 : random.length()));  // had trouble going out of bounds on substring
     for (String part : parts) {
       basis += part;
     }
-    basis += String.valueOf(Math.random()).substring(2, 18);
+    basis += Long.toString(DateTime.now().getMillis());
     LOG.info("Generated key: " + basis);
-    return basis;
+    return toHex(basis);
   }
 
+  private static String toHex(String arg) {
+    return String.format("%x", new BigInteger(1, arg.getBytes()));
+  }
   public void addEntity(PersistedGameEntity entity) {
     entities.put(entity.getKey(), entity);
   }
