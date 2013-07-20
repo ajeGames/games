@@ -1,6 +1,7 @@
 package com.ajegames.picnic.service.resource;
 
 import com.ajegames.picnic.Picnic;
+import com.ajegames.picnic.SpinStatus;
 import com.ajegames.picnic.repository.KeyGenerator;
 import com.google.common.collect.Maps;
 import com.yammer.metrics.annotation.Timed;
@@ -12,9 +13,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 
-/**
- * Created for AJE Games by bigdaddy on 6/22/13 at 11:57 AM.
- */
 @Path("/picnic/spinner")
 public class SpinnerResource extends BasePicnicResource {
 
@@ -25,7 +23,7 @@ public class SpinnerResource extends BasePicnicResource {
   @Path("{gameKey}")
   @Produces(MediaType.APPLICATION_JSON)
   @Timed
-  public String getSpinToken(@PathParam("gameKey") String gameKey,
+  public SpinState getSpinToken(@PathParam("gameKey") String gameKey,
                              @QueryParam("playerKey") String playerKey) {
     LOG.info("Invoked getSpinToken with gameKey=" + gameKey + " and playerKey=" + playerKey);
     Picnic game = getGame(gameKey);
@@ -38,7 +36,7 @@ public class SpinnerResource extends BasePicnicResource {
     }
     String spinToken = KeyGenerator.generateKey(8);
     pendingSpins.put(spinToken, game);
-    return spinToken;
+    return SpinState.createForToken(spinToken);
   }
 
 /*
@@ -53,12 +51,13 @@ public class SpinnerResource extends BasePicnicResource {
   @Path("{spinToken}")
   @Produces(MediaType.APPLICATION_JSON)
   @Timed
-  public String spin(@PathParam("spinToken") String spinToken) {
+  public SpinState spin(@PathParam("spinToken") String spinToken) {
     LOG.info("Invoked spin with spinToken=" + spinToken);
     Picnic game = pendingSpins.remove(spinToken);
     if (game == null) {
       throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
-    return game.takeTurn();  // take a turn
+    SpinStatus result = game.takeTurn();
+    return SpinState.createForSpin(result);
   }
 }

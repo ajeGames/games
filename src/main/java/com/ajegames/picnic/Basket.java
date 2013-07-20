@@ -105,14 +105,15 @@ public class Basket {
     decrementCount(itemToRemove);
   }
 
-  public void removeItemOfType(ItemType type) {
+  public Item removeItemOfType(ItemType type) {
     for (Item itemInBasket : basket) {
       if (type.equals(itemInBasket.getType())) {
         basket.remove(itemInBasket);
         decrementCount(itemInBasket);
-        return;
+        return itemInBasket;
       }
     }
+    return Item.NULL_ITEM;
   }
 
   private void incrementCount(Item itemBeingAdded) {

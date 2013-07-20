@@ -7,6 +7,8 @@ import com.ajegames.utility.BaseSpinnerOption;
  */
 public class Item extends BaseSpinnerOption {
 
+  public static final Item NULL_ITEM = new Item("null", "null", ItemType.NULL);
+
   private String description;
   private ItemType type;
 

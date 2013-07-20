@@ -104,18 +104,20 @@ public class Picnic implements PersistedGameEntity {
     status = PicnicGameStatus.PLAYING;
   }
 
-  public String takeTurn() {
+  public SpinStatus takeTurn() {
     if (!isPlaying()) {
       LOG.warn("Someone tried to take a turn during staging or after game over.");
-      return "";
+      return null; // TODO consider throwing something
     }
     Player currentPlayer = players.get(indexCurrentPlayer);
     Basket currentBasket = baskets.get(currentPlayer.getKey());
+    SpinStatus spinStatus = new SpinStatus();
     Item selectedItem;
     boolean settled;
     do {
       settled = true;  // only exception is when nuisance picked while prevention is held
       selectedItem = spinner.spin();
+      spinStatus.setSpinResult(selectedItem);
       LOG.info("Spinner is pointing to " + selectedItem.getDescription());
       if (!selectedItem.isNuisance()) {
         currentBasket.gatherItem(selectedItem);
@@ -124,10 +126,13 @@ public class Picnic implements PersistedGameEntity {
         if (!currentBasket.hasPrevention(aProblem)) {
           if (aProblem.isAgainstItem()) {
             currentBasket.removeItem(aProblem.getWorksAgainst());
+            spinStatus.setToRemoveItem(aProblem.getWorksAgainst());
           } else if (aProblem.isAgainstItemType()) {
-            currentBasket.removeItemOfType(aProblem.getWorksAgainstType());
+            Item removedItem = currentBasket.removeItemOfType(aProblem.getWorksAgainstType());
+            spinStatus.setToRemoveItem(removedItem);
           } else if (aProblem.isWipeOut()) {
             currentBasket.empty();
+            spinStatus.setToWipeout();
           }
         } else {
           LOG.info("Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
@@ -145,6 +150,6 @@ public class Picnic implements PersistedGameEntity {
     } else {
       advanceCurrentPlayer();
     }
-    return selectedItem.getValue();
+    return spinStatus;
   }
 }

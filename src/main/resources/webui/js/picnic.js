@@ -1,25 +1,64 @@
 $(document).ready(function() {
 
     $("#registerPlayerButton").click(function() {
-        // create a player on the server -- hold onto player key
-        // for now, just echo input field on screen
         $.post("service/picnic/player",
             {
                 playerName: $("#playerName").val()
             },
             function(data, status) {
-                $("#playerKey").text(data.playerKey);
+                $("#playerKey").text(data.key);
+            });
+    });
+
+    $("#newGameButton").click(function() {
+        $.post("service/picnic/game",
+            {
+                playerKey: $("#playerKey").text()
+            },
+            function(data, status) {
+                $("#gameKey").text(data.key);
+                $("#gameStatus").text(data.status)
+            });
+    });
+
+    $("#startGameButton").click(function() {
+        $.ajax({
+            url: 'service/picnic/game/' + $("#gameKey").text() + '/play',
+            type: 'PUT',
+            success: function(data) {
+                $('#gameStatus').text(data.status)
+            },
+            error: function(data) {
+                alert('Something went wrong -- game was not started!!!');
+                $('#gameStatus').text(data.status)
+            }
+        });
+    });
+
+    // 1. click to request turn
+    // 2. if granted, change state so that click takes turn
+    // 3. once turn is over, change state back to request turn
+    $("#checkTurnButton").click(function() {
+        $.get('service/picnic/spinner/' + $('#gameKey').text(),
+            {
+                playerKey: $('#playerKey').text()
+            },
+            function(data, status) {
+                $('#spinToken').text(data.spinToken);
             });
     });
 
     $("#spinButton").click(function() {
-        $.post("service/picnic/game", {},
+        $.post("service/picnic/spinner/" + $("#spinToken").text(), {},
             function(data, status) {
-                // FIXME -- not being invoked or at least result does not appear in UI
-                $("#spinResult").text(data);
-            }
-        )
-    })
+                $("#spinResult").text(data.spinResult);
+                if (data.remove) {
+                    removeFromBasket(data.itemToRemove);
+                } else {
+                    addToBasket("#foodList", data.spinResult);
+                }
+            });
+    });
 
     $("#addFoodButton").click(function() {
         addToBasket("#foodList", "bacon");
