@@ -46,6 +46,21 @@ $(document).ready(function() {
     });
 
     $("#spinButton").click(function() {
+        $.ajax({
+            type: 'POST',
+            url: "service/picnic/spinner/" + $("#spinToken").text(),
+            success: function(data, status) {
+                         $("#spinResult").text(data.spinResult);
+                         if (data.remove) {
+                             removeFromBasket(data.itemToRemove);
+                         } else {
+                             addToBasket("#foodList", data.spinResult);
+                         }
+                     },
+            async: false,
+            complete: checkGameStatus
+        });
+/*
         $.post("service/picnic/spinner/" + $("#spinToken").text(), {},
             function(data, status) {
                 $("#spinResult").text(data.spinResult);
@@ -54,12 +69,15 @@ $(document).ready(function() {
                 } else {
                     addToBasket("#foodList", data.spinResult);
                 }
-                checkGameStatus();
             });
+        checkGameStatus();
+ */
     });
 
     function checkGameStatus() {
-        $.get("service/picnic/game/" + $('#gameToken').text(), {},
+        var token = $("#gameToken").text();
+        alert('checking game status with gameToken ' + token);
+        $.get("service/picnic/game/" + token, {},
             function(data, status) {
                 $('#gameStatus').text(data.status);
             });
