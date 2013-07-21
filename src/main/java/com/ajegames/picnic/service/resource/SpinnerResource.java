@@ -24,7 +24,7 @@ public class SpinnerResource extends BasePicnicResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Timed
   public SpinState getSpinToken(@PathParam("gameKey") String gameKey,
-                             @QueryParam("playerKey") String playerKey) {
+                                @QueryParam("playerKey") String playerKey) {
     LOG.info("Invoked getSpinToken with gameKey=" + gameKey + " and playerKey=" + playerKey);
     Picnic game = getGame(gameKey);
     if (!game.isPlaying()) {

@@ -35,7 +35,7 @@ spinner:
         description: Water
         weight: 3
     supplies:
-      - key: plasticWare
+      - key: plasticware
         description: "Plastic forks, spoons, knives"
       - key: napkins
         description: Napkins
@@ -44,9 +44,6 @@ spinner:
         description: Ants
         weight: 3
         impact: reduces-food
-      - key: blackflies
-        description: "Black Flies"
-        impact: lose-turn
       - key: rain
         description: Rain
         impact: wipeout

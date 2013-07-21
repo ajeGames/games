@@ -17,7 +17,7 @@ $(document).ready(function() {
             },
             function(data, status) {
                 $("#gameKey").text(data.key);
-                $("#gameStatus").text(data.status)
+                $("#gameStatus").text(data.status);
             });
     });
 
@@ -26,18 +26,15 @@ $(document).ready(function() {
             url: 'service/picnic/game/' + $("#gameKey").text() + '/play',
             type: 'PUT',
             success: function(data) {
-                $('#gameStatus').text(data.status)
+                $('#gameStatus').text(data.status);
             },
             error: function(data) {
                 alert('Something went wrong -- game was not started!!!');
-                $('#gameStatus').text(data.status)
+                $('#gameStatus').text(data.status);
             }
         });
     });
 
-    // 1. click to request turn
-    // 2. if granted, change state so that click takes turn
-    // 3. once turn is over, change state back to request turn
     $("#checkTurnButton").click(function() {
         $.get('service/picnic/spinner/' + $('#gameKey').text(),
             {
@@ -57,47 +54,22 @@ $(document).ready(function() {
                 } else {
                     addToBasket("#foodList", data.spinResult);
                 }
+                checkGameStatus();
             });
     });
 
-    $("#addFoodButton").click(function() {
-        addToBasket("#foodList", "bacon");
-    });
-
-    $("#removeFoodButton").click(function() {
-        removeFromBasket("#foodList", "bacon");
-    });
-
-    $("#removeDrinkButton").click(function() {
-        removeFromBasket("#drinkList", "water");
-    });
-
-    $("#removeSupplyButton").click(function() {
-        removeFromBasket("#supplyList", "sunscreen");
-    });
-
-    $("#addDrinkButton").click(function() {
-        addToBasket("#drinkList", "water");
-    });
-
-    $("#addSupplyButton").click(function() {
-        addToBasket("#supplyList", "sunscreen");
-    });
-
-    $("#testAddButton").click(function() {
-        addToBasket("#foodList", $("#testItem").val());
-    });
-
-    $("#testRemoveButton").click(function() {
-        removeFromBasket("#foodList", $("#testItem").val());
-    });
+    function checkGameStatus() {
+        $.get("service/picnic/game/" + $('#gameToken').text(), {},
+            function(data, status) {
+                $('#gameStatus').text(data.status);
+            });
+    }
 
     function addToBasket(type, foodItem) {
         $(type).append('<img src="img/' + foodItem + '.png" width="120" name="' + foodItem + '"/>');
     }
 
     function removeFromBasket(type, foodItem) {
-        var blah = $("img").attr("src");
         var items = $(type + ' img');
         items.each(function() {
             if ($(this).attr('name') == foodItem) {
