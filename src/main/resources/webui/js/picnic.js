@@ -1,3 +1,5 @@
+var myPlayerKey, myGameKey
+
 $(document).ready(function() {
 
     $("#registerPlayerButton").click(function() {
@@ -6,24 +8,26 @@ $(document).ready(function() {
                 playerName: $("#playerName").val()
             },
             function(data, status) {
-                $("#playerKey").text(data.key);
+                myPlayerKey = data.key;
+                $("#playerKey").text(myPlayerKey);
             });
     });
 
     $("#newGameButton").click(function() {
         $.post("service/picnic/game",
             {
-                playerKey: $("#playerKey").text()
+                playerKey: myPlayerKey
             },
             function(data, status) {
-                $("#gameKey").text(data.key);
+                myGameKey = data.key;
+                $("#gameKey").text(myGameKey);
                 $("#gameStatus").text(data.status);
             });
     });
 
     $("#startGameButton").click(function() {
         $.ajax({
-            url: 'service/picnic/game/' + $("#gameKey").text() + '/play',
+            url: 'service/picnic/game/' + myGameKey + '/play',
             type: 'PUT',
             success: function(data) {
                 $('#gameStatus').text(data.status);
@@ -38,7 +42,7 @@ $(document).ready(function() {
     $("#checkTurnButton").click(function() {
         $.get('service/picnic/spinner/' + $('#gameKey').text(),
             {
-                playerKey: $('#playerKey').text()
+                playerKey: myPlayerKey
             },
             function(data, status) {
                 $('#spinToken').text(data.spinToken);
@@ -75,9 +79,8 @@ $(document).ready(function() {
     });
 
     function checkGameStatus() {
-        var token = $("#gameToken").text();
-        alert('checking game status with gameToken ' + token);
-        $.get("service/picnic/game/" + token, {},
+        alert('checking game status with gameKey ' + myGameKey);
+        $.get("service/picnic/game/" + myGameKey, {},
             function(data, status) {
                 $('#gameStatus').text(data.status);
             });
