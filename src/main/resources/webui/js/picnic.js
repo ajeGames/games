@@ -1,9 +1,11 @@
-var myPlayerKey, myGameKey
+const serviceUri = 'http://localhost:8080/service/picnic/';
+
+var myPlayerKey, myGameKey, mySpinToken
 
 $(document).ready(function() {
 
     $("#registerPlayerButton").click(function() {
-        $.post("service/picnic/player",
+        $.post(serviceUri + 'player',
             {
                 playerName: $("#playerName").val()
             },
@@ -14,80 +16,75 @@ $(document).ready(function() {
     });
 
     $("#newGameButton").click(function() {
-        $.post("service/picnic/game",
+        $.post(serviceUri + 'game',
             {
                 playerKey: myPlayerKey
             },
             function(data, status) {
                 myGameKey = data.key;
                 $("#gameKey").text(myGameKey);
-                $("#gameStatus").text(data.status);
+                showGameStatus(data.status);
             });
     });
 
     $("#startGameButton").click(function() {
         $.ajax({
-            url: 'service/picnic/game/' + myGameKey + '/play',
+            url: serviceUri + 'game/' + myGameKey + '/play',
             type: 'PUT',
-            success: function(data) {
-                $('#gameStatus').text(data.status);
-            },
             error: function(data) {
                 alert('Something went wrong -- game was not started!!!');
-                $('#gameStatus').text(data.status);
+            },
+            success: function(data) {
+                showGameStatus(data.status);
             }
         });
     });
 
     $("#checkTurnButton").click(function() {
-        $.get('service/picnic/spinner/' + $('#gameKey').text(),
+        $.get(serviceUri + 'spinner/' + myGameKey,
             {
                 playerKey: myPlayerKey
             },
             function(data, status) {
-                $('#spinToken').text(data.spinToken);
+                mySpinToken = data.spinToken;
+                $('#spinToken').text(mySpinToken);
             });
     });
 
     $("#spinButton").click(function() {
         $.ajax({
             type: 'POST',
-            url: "service/picnic/spinner/" + $("#spinToken").text(),
+            url: serviceUri + 'spinner/' + mySpinToken,
             success: function(data, status) {
-                         $("#spinResult").text(data.spinResult);
-                         if (data.remove) {
-                             removeFromBasket(data.itemToRemove);
-                         } else {
-                             addToBasket("#foodList", data.spinResult);
-                         }
-                     },
-            async: false,
-            complete: checkGameStatus
-        });
-/*
-        $.post("service/picnic/spinner/" + $("#spinToken").text(), {},
-            function(data, status) {
-                $("#spinResult").text(data.spinResult);
+                showLatestSpin(data.spinResult);
                 if (data.remove) {
                     removeFromBasket(data.itemToRemove);
                 } else {
                     addToBasket("#foodList", data.spinResult);
                 }
-            });
-        checkGameStatus();
- */
+            },
+            async: false,
+            complete: checkGameStatus
+        });
     });
 
     function checkGameStatus() {
-        alert('checking game status with gameKey ' + myGameKey);
-        $.get("service/picnic/game/" + myGameKey, {},
+        $.get(serviceUri + 'game/' + myGameKey, {},
             function(data, status) {
-                $('#gameStatus').text(data.status);
+                showGameStatus(data.status);
             });
     }
 
+    function showGameStatus(status) {
+        $('#gameStatus').text(status);
+    }
+
+    function showLatestSpin(spin) {
+        $('#latestSpin').attr('src', 'img/' + spin + '.png');
+    }
+
     function addToBasket(type, foodItem) {
-        $(type).append('<img src="img/' + foodItem + '.png" width="120" name="' + foodItem + '"/>');
+        $(type).append( '<img src="img/' + foodItem + '.png" width="120" name="' + foodItem + '"/>' );
     }
 
     function removeFromBasket(type, foodItem) {
