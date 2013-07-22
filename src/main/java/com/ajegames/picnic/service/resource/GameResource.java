@@ -3,6 +3,7 @@ package com.ajegames.picnic.service.resource;
 import com.ajegames.picnic.Picnic;
 import com.ajegames.picnic.Player;
 import com.ajegames.picnic.repository.GameRepository;
+import com.google.common.collect.Lists;
 import com.yammer.metrics.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/picnic/game")
 public class GameResource extends BasePicnicResource {
@@ -27,6 +29,17 @@ public class GameResource extends BasePicnicResource {
       throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
     return buildGameState(game);
+  }
+
+  @GET
+  @Path("list-open")
+  public List<GameState> listOpenGames() {
+    LOG.info("Invoked listOpenGames");
+    List<GameState> games = Lists.newArrayList();
+    for (Picnic game : GameRepository.findOpenGames()) {
+      games.add(new GameState(game));
+    }
+    return games;
   }
 
   @POST

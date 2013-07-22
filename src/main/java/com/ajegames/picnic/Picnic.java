@@ -88,6 +88,10 @@ public class Picnic implements PersistedGameEntity {
     return status;
   }
 
+  public boolean isStaging() {
+    return status.equals(PicnicGameStatus.STAGING);
+  }
+
   public boolean isPlaying() {
     return status.equals(PicnicGameStatus.PLAYING);
   }

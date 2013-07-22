@@ -1,8 +1,12 @@
 package com.ajegames.picnic.repository;
 
 import com.ajegames.picnic.Picnic;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.List;
 
 public class GameRepository extends BaseRepository {
 
@@ -27,6 +31,20 @@ public class GameRepository extends BaseRepository {
 
   synchronized public static Picnic findGame(String key) {
     return GameRepository.getInstance().getGame(key);
+  }
+
+  synchronized public static List<Picnic> findOpenGames() {
+    List<Picnic> openGames = Lists.newArrayList();
+    Collection<PersistedGameEntity> entities = GameRepository.getInstance().getEntities().values();
+    for (PersistedGameEntity entity : entities) {
+      if (entity instanceof Picnic) {
+        Picnic game = (Picnic) entity;
+        if (game.isStaging()) {
+          openGames.add(game);
+        }
+      }
+    }
+    return openGames;
   }
 
   private Picnic getGame(String key) {

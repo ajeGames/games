@@ -1,6 +1,8 @@
 package com.ajegames.picnic.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 /**
@@ -8,11 +10,11 @@ import java.util.List;
  */
 public class SpinnerConfiguration {
 
-  private List<SpinnerItemConfig> foods;
-  private List<SpinnerItemConfig> drinks;
-  private List<SpinnerItemConfig> supplies;
-  private List<SpinnerItemConfig> nuisances;
-  private List<SpinnerItemConfig> preventions;
+  private List<SpinnerItemConfig> foods = Lists.newArrayList();
+  private List<SpinnerItemConfig> drinks = Lists.newArrayList();
+  private List<SpinnerItemConfig> supplies = Lists.newArrayList();
+  private List<SpinnerItemConfig> nuisances = Lists.newArrayList();
+  private List<SpinnerItemConfig> preventions = Lists.newArrayList();
 
   @JsonProperty
   public List<SpinnerItemConfig> getFoods() {
