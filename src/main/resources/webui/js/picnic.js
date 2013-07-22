@@ -27,6 +27,17 @@ $(document).ready(function() {
             });
     });
 
+    $("#findOpenGamesButton").click(function() {
+        $.get(serviceUri + 'game/list-open', {},
+            function(data, status) {
+                showOpenGames(data);
+            });
+    });
+
+    $("#joinGameButton").click(function() {
+        alert('not implemented');
+    });
+
     $("#startGameButton").click(function() {
         $.ajax({
             url: serviceUri + 'game/' + myGameKey + '/play',
@@ -67,6 +78,10 @@ $(document).ready(function() {
             complete: checkGameStatus
         });
     });
+
+    function showOpenGames(data) {
+        alert('Not implemented -- should populate open games list.');
+    }
 
     function checkGameStatus() {
         $.get(serviceUri + 'game/' + myGameKey, {},

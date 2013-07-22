@@ -33,6 +33,8 @@ public class GameResource extends BasePicnicResource {
 
   @GET
   @Path("list-open")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Timed
   public List<GameState> listOpenGames() {
     LOG.info("Invoked listOpenGames");
     List<GameState> games = Lists.newArrayList();
