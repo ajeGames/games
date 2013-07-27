@@ -16,33 +16,34 @@
 <body>
 <h1>Let's Have a Picnic!</h1>
 
-<div id="who">
-  <div id="playerInfo"><label for="playerName">Who Are You?</label> <input id="playerName" name="playerName" type="text" />
-    <button id="registerPlayerButton">Join the Fun</button> Your player key is: <span id="playerKey">n/a</span></div>
-  <div id="gameInfo"><button id="newGameButton">New Game</button> Your game key is: <span id="gameKey">n/a</span></div>
-  <div>
+<div id="message"></div>
+<div id="playerInfo"><label for="playerName">Who Are You?</label> <input id="playerName" name="playerName" type="text" />
+  <button id="registerPlayerButton">Join the Fun</button></div>
+<div id="gameInfo">
+  <div><button id="newGameButton">New Game</button> OR
     <button id="findOpenGamesButton">Find Open Games</button> Open Games: <select id="gamesToJoin">
       <option value="0">Choose One</option>
     </select>
     <button id="joinGameButton">Join Game</button>
   </div>
-  <div id="gameStatusInfo"><button id="startGameButton">Start Game</button> Game status: <span id="gameStatus">n/a</span></div>
-  <div id="turnInfo"><button id="checkTurnButton">Is it my turn?</button> <button id="spinButton">Spin</button></div>
-  <div><img id="latestSpin" width="120" src="" /></div>
 </div>
-
-<div id="basket">
-  <div id="food" style="position:relative">
-    <span id="foodList">
-    </span>
-  </div>
-  <div id="drinks" style="position:relative">
-    <span id="drinkList">
-    </span>
-  </div>
-  <div id="supply" style="position:relative">
-    <span id="supplyList">
-    </span>
+<div id="gameStatusInfo">Game status: <span id="gameStatus">n/a</span> <button id="startGameButton">Start Game</button></div>
+<div id="playInfo">
+  <div><button id="spinButton">Spin</button></div>
+  <div><img id="latestSpin" width="120" src="" /></div>
+  <div id="basket">
+    <div id="food" style="position:relative">
+      <span id="foodList">
+      </span>
+    </div>
+    <div id="drinks" style="position:relative">
+      <span id="drinkList">
+      </span>
+    </div>
+    <div id="supply" style="position:relative">
+      <span id="supplyList">
+      </span>
+    </div>
   </div>
 </div>
 

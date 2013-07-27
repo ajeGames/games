@@ -4,14 +4,18 @@ var myPlayerKey, myGameKey, mySpinToken
 
 $(document).ready(function() {
 
+    resetView();
+
     $("#registerPlayerButton").click(function() {
         $.post(serviceUri + 'player',
             {
-                playerName: $("#playerName").val()
+                playerName: $('#playerName').val()
             },
             function(data, status) {
                 myPlayerKey = data.key;
-                $("#playerKey").text(myPlayerKey);
+                changeMessage('Hello, ' + data.name);
+                $("#gameInfo").show();
+                $("#playerInfo").hide();
             });
     });
 
@@ -22,8 +26,9 @@ $(document).ready(function() {
             },
             function(data, status) {
                 myGameKey = data.key;
-                $("#gameKey").text(myGameKey);
                 showGameStatus(data.status);
+                $("#gameStatusInfo").show();
+                $("#gameInfo").hide();
             });
     });
 
@@ -47,11 +52,13 @@ $(document).ready(function() {
             },
             success: function(data) {
                 showGameStatus(data.status);
+                $("#playInfo").show();
+                $("#startGameButton").hide();
             }
         });
     });
 
-    $("#checkTurnButton").click(function() {
+    $("#spinButton").click(function() {
         $.get(serviceUri + 'spinner/' + myGameKey,
             {
                 playerKey: myPlayerKey
@@ -59,25 +66,13 @@ $(document).ready(function() {
             function(data, status) {
                 mySpinToken = data.spinToken;
                 $('#spinToken').text(mySpinToken);
+                spin();
             });
     });
 
-    $("#spinButton").click(function() {
-        $.ajax({
-            type: 'POST',
-            url: serviceUri + 'spinner/' + mySpinToken,
-            success: function(data, status) {
-                showLatestSpin(data.spinResult);
-                if (data.remove) {
-                    removeFromBasket(data.itemToRemove);
-                } else {
-                    addToBasket("#foodList", data.spinResult);
-                }
-            },
-            async: false,
-            complete: checkGameStatus
-        });
-    });
+    function changeMessage(msg) {
+        $("#message").text(msg);
+    }
 
     function showOpenGames(data) {
         alert('Not implemented -- should populate open games list.');
@@ -98,6 +93,23 @@ $(document).ready(function() {
         $('#latestSpin').attr('src', 'img/' + spin + '.png');
     }
 
+    function spin() {
+        $.ajax({
+            type: 'POST',
+            url: serviceUri + 'spinner/' + mySpinToken,
+            success: function(data, status) {
+                showLatestSpin(data.spinResult);
+                if (data.remove) {
+                    removeFromBasket(data.itemToRemove);
+                } else {
+                    addToBasket("#foodList", data.spinResult);
+                }
+            },
+            async: false,
+            complete: checkGameStatus
+        });
+    }
+
     function addToBasket(type, foodItem) {
         $(type).append( '<img src="img/' + foodItem + '.png" width="120" name="' + foodItem + '"/>' );
     }
@@ -111,6 +123,14 @@ $(document).ready(function() {
             }
             return true;
         });
+    }
+
+    function resetView() {
+        $("#gameInfo").hide();
+        $("#gameStatusInfo").hide();
+        $("#startGameButton").show();
+        $("#playInfo").hide();
+        $("#foodList").empty();
     }
 });
 
