@@ -5,6 +5,7 @@ var myPlayerKey, myGameKey, mySpinToken
 $(document).ready(function() {
 
     resetView();
+    changeMessage("Who are you?");
 
     $("#registerPlayerButton").click(function() {
         $.post(serviceUri + 'player',
@@ -13,7 +14,7 @@ $(document).ready(function() {
             },
             function(data, status) {
                 myPlayerKey = data.key;
-                changeMessage('Hello, ' + data.name);
+                changeMessage('Hello, ' + data.name + '!');
                 $("#gameInfo").show();
                 $("#playerInfo").hide();
             });
@@ -59,6 +60,7 @@ $(document).ready(function() {
     });
 
     $("#spinButton").click(function() {
+        // first check if it's player's turn; ask for spin token
         $.get(serviceUri + 'spinner/' + myGameKey,
             {
                 playerKey: myPlayerKey
@@ -111,7 +113,7 @@ $(document).ready(function() {
     }
 
     function addToBasket(type, foodItem) {
-        $(type).append( '<img src="img/' + foodItem + '.png" width="120" name="' + foodItem + '"/>' );
+        $(type).append( '<img class="itemOnBlanket" src="img/' + foodItem + '.png" width="90" name="' + foodItem + '"/>' );
     }
 
     function removeFromBasket(type, foodItem) {

@@ -1,12 +1,37 @@
 button {
-    color: yellow;
-    background-color: navy;
-    height: 40px;
+    color: darkslategray;
+    background-color: burlywood;
+    font: bold 18px arial,sans-serif;
+    text-align: center;
+}
+
+button #spin {
+    margin: 10px;
+    width: 100px;
 }
 
 .board {
-    width: 768;
-    height: 1024;
+    width: 970px;
     margin: 5px;
-    border: solid 2px cornflowerblue;
+}
+
+#blanket {
+    width: 816px;
+    float: right;
+    margin-right: 10px;
+    background-image: url('img/blanket1.png');
+}
+
+#latestSpin {
+    width: 120;
+    float: left;
+}
+
+.infoSection {
+    padding: 0.5em;
+}
+
+.itemOnBlanket {
+    margin: 4px;
+    border: 1px gray solid;
 }
