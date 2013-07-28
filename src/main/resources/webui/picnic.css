@@ -1,3 +1,12 @@
+body {
+    background: lawngreen;
+}
+
+.infoSection {
+    margin-bottom: 0.5em;
+    padding: 0.5em 0;
+}
+
 button {
     color: darkslategray;
     background-color: burlywood;
@@ -10,9 +19,25 @@ button #spin {
     width: 100px;
 }
 
-.board {
+#board {
     width: 970px;
     margin: 5px;
+    padding: 0;
+    background: lawngreen;
+}
+
+#playArea {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#spinner {
+    width: 140px;
+    float: left;
+}
+
+#latestSpin {
+    width: 120px;
 }
 
 #blanket {
@@ -20,15 +45,6 @@ button #spin {
     float: right;
     margin-right: 10px;
     background-image: url('img/blanket1.png');
-}
-
-#latestSpin {
-    width: 120;
-    float: left;
-}
-
-.infoSection {
-    padding: 0.5em;
 }
 
 .itemOnBlanket {

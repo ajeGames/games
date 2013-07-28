@@ -53,7 +53,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 showGameStatus(data.status);
-                $("#playInfo").show();
+                $("#playArea").show();
                 $("#startGameButton").hide();
             }
         });
@@ -104,7 +104,7 @@ $(document).ready(function() {
                 if (data.remove) {
                     removeFromBasket(data.itemToRemove);
                 } else {
-                    addToBasket("#foodList", data.spinResult);
+                    addToBasket(data.spinResult);
                 }
             },
             async: false,
@@ -112,14 +112,14 @@ $(document).ready(function() {
         });
     }
 
-    function addToBasket(type, foodItem) {
-        $(type).append( '<img class="itemOnBlanket" src="img/' + foodItem + '.png" width="90" name="' + foodItem + '"/>' );
+    function addToBasket(item) {
+        $("#picnicItems").append( '<img class="itemOnBlanket" src="img/' + item + '.png" width="90" name="' + item + '"/>' );
     }
 
-    function removeFromBasket(type, foodItem) {
-        var items = $(type + ' img');
+    function removeFromBasket(item) {
+        var items = $("#picnicItems img");
         items.each(function() {
-            if ($(this).attr('name') == foodItem) {
+            if ($(this).attr('name') == item) {
                 $(this).remove();
                 return false;
             }
@@ -131,8 +131,8 @@ $(document).ready(function() {
         $("#gameInfo").hide();
         $("#gameStatusInfo").hide();
         $("#startGameButton").show();
-        $("#playInfo").hide();
-        $("#foodList").empty();
+        $("#playArea").hide();
+        $("#picnicItems").empty();
     }
 });
 

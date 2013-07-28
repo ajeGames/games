@@ -15,37 +15,39 @@
 </head>
 
 <body>
-<h1>Let's Have a Picnic!</h1>
 
-<div class="board">
-  <div id="message" class="infoSection"></div>
-  <div id="playerInfo"><label for="playerName">Player Name:</label> <input id="playerName" name="playerName" type="text" />
-    <button id="registerPlayerButton">Join the Fun</button></div>
+
+<div id="board">
+  <div id="masthead" class="infoSection">
+    <h1>Let's Have a Picnic!</h1>
+    <span id="message"></span>
+  </div>
+  <div id="playerInfo" class="infoSection">
+    <p><label for="playerName">Player Name:</label> <input id="playerName" name="playerName" type="text" /></p>
+    <p><button id="registerPlayerButton">Join the Fun</button></p>
+  </div>
   <div id="gameInfo" class="infoSection">
-    <div><button id="newGameButton">New Game</button> OR
-      <button id="findOpenGamesButton">Find Open Games</button> Open Games: <select id="gamesToJoin">
-        <option value="0">Choose One</option>
-      </select>
-      <button id="joinGameButton">Join Game</button>
+    <div><button id="newGameButton">New Game</button>
+      <span style="display:none">
+        OR
+        <button id="findOpenGamesButton">Find Open Games</button> Open Games: <select id="gamesToJoin">
+          <option value="0">Choose One</option>
+        </select>
+        <button id="joinGameButton">Join Game</button>
+      </span>
     </div>
   </div>
-  <div id="gameStatusInfo" class="infoSection">Game status: <span id="gameStatus">n/a</span> <button id="startGameButton">Start Game</button></div>
-  <div id="playInfo" class="infoSection">
-    <div><button id="spinButton">SPIN</button></div>
-    <img id="latestSpin" width="90"/>
+  <div id="gameStatusInfo" class="infoSection">
+    <div>Game status: <span id="gameStatus">n/a</span></div>
+    <button id="startGameButton">Start Game</button>
+  </div>
+  <div id="playArea">
+    <div id="spinner">
+      <div><button id="spinButton">SPIN</button></div>
+      <div></div><img id="latestSpin"/></div>
+    </div>
     <div id="blanket">
-      <div id="food" style="position:relative">
-        <span id="foodList">
-        </span>
-      </div>
-      <div id="drinks" style="position:relative">
-        <span id="drinkList">
-        </span>
-      </div>
-      <div id="supply" style="position:relative">
-        <span id="supplyList">
-        </span>
-      </div>
+      <span id="picnicItems"></span>
     </div>
   </div>
 </div>
