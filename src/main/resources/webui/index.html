@@ -8,6 +8,7 @@
   <meta content="games fun" name="keywords">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon-precomposed" href="/img/picnic-logo-appletouch.png">
   <link rel="stylesheet" type="text/css" href="picnic.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="js/picnic.js"></script>
@@ -16,33 +17,35 @@
 <body>
 <h1>Let's Have a Picnic!</h1>
 
-<div id="message"></div>
-<div id="playerInfo"><label for="playerName">Who Are You?</label> <input id="playerName" name="playerName" type="text" />
-  <button id="registerPlayerButton">Join the Fun</button></div>
-<div id="gameInfo">
-  <div><button id="newGameButton">New Game</button> OR
-    <button id="findOpenGamesButton">Find Open Games</button> Open Games: <select id="gamesToJoin">
-      <option value="0">Choose One</option>
-    </select>
-    <button id="joinGameButton">Join Game</button>
+<div class="board">
+  <div id="message"></div>
+  <div id="playerInfo"><label for="playerName">Who Are You?</label> <input id="playerName" name="playerName" type="text" />
+    <button id="registerPlayerButton">Join the Fun</button></div>
+  <div id="gameInfo">
+    <div><button id="newGameButton">New Game</button> OR
+      <button id="findOpenGamesButton">Find Open Games</button> Open Games: <select id="gamesToJoin">
+        <option value="0">Choose One</option>
+      </select>
+      <button id="joinGameButton">Join Game</button>
+    </div>
   </div>
-</div>
-<div id="gameStatusInfo">Game status: <span id="gameStatus">n/a</span> <button id="startGameButton">Start Game</button></div>
-<div id="playInfo">
-  <div><button id="spinButton">Spin</button></div>
-  <div><img id="latestSpin" width="120" src="" /></div>
-  <div id="basket">
-    <div id="food" style="position:relative">
-      <span id="foodList">
-      </span>
-    </div>
-    <div id="drinks" style="position:relative">
-      <span id="drinkList">
-      </span>
-    </div>
-    <div id="supply" style="position:relative">
-      <span id="supplyList">
-      </span>
+  <div id="gameStatusInfo">Game status: <span id="gameStatus">n/a</span> <button id="startGameButton">Start Game</button></div>
+  <div id="playInfo">
+    <div><button id="spinButton">Spin</button></div>
+    <div><img id="latestSpin" width="120" src="" /></div>
+    <div id="basket">
+      <div id="food" style="position:relative">
+        <span id="foodList">
+        </span>
+      </div>
+      <div id="drinks" style="position:relative">
+        <span id="drinkList">
+        </span>
+      </div>
+      <div id="supply" style="position:relative">
+        <span id="supplyList">
+        </span>
+      </div>
     </div>
   </div>
 </div>

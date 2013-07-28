@@ -1,4 +1,4 @@
-const serviceUri = 'http://localhost:8080/service/picnic/';
+const serviceUri = '/service/picnic/';
 
 var myPlayerKey, myGameKey, mySpinToken
 

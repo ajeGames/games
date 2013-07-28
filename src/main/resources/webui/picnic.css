@@ -1,4 +1,12 @@
 button {
     color: yellow;
     background-color: navy;
+    height: 40px;
+}
+
+.board {
+    width: 768;
+    height: 1024;
+    margin: 5px;
+    border: solid 2px cornflowerblue;
 }
