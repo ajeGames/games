@@ -4,8 +4,49 @@ var myPlayerKey, myGameKey, mySpinToken
 
 $(document).ready(function() {
 
-    resetView();
-    changeMessage("Who are you?");
+    showPlayerSetupState();
+
+    // there are basically 4 states: player setup, game setup, play, game over
+
+    function showPlayerSetupState() {
+        // make sure fields to register player name are visible
+        changeMessage("To get started, make up a fun player name.  It does not have to be your real name.");
+        $("#playerInfo").show();
+        $("#playerName").focus();
+        $("#gameInfo").hide();
+        $("#playArea").hide();
+        clearBlanket();
+    }
+
+    function showGameSetupState() {
+        // make sure fields to organize or join a game are visible
+        // player name should be read-only with option to change player
+        changeMessage("Go ahead and start the game.")
+        $("#gameInfo").show();
+        $("#playerInfo").hide();
+        $("#playArea").hide();
+        clearBlanket();
+    }
+
+    function showPlayState() {
+        // make sure spin button, spin results and blanket are visible
+        // should be allowed to spin and to quit game
+        changeMessage("Try to put together a picnic faster than your opponent.")
+        $("#playArea").show();
+        $("#spinButton").show();
+        $("#latestSpin").hide();
+        $("#playAgainButton").hide();
+        $("#gameInfo").hide();
+    }
+
+    function showGameOverState() {
+        // should be allow to organize or join a new game
+        changeMessage("We have a winner!  The game is over!!!");
+        $("#spinButton").hide();
+        $("#playAgainButton").show();
+    }
+
+    // end of game states
 
     $("#registerPlayerButton").click(function() {
         $.post(serviceUri + 'player',
@@ -14,9 +55,8 @@ $(document).ready(function() {
             },
             function(data, status) {
                 myPlayerKey = data.key;
-                changeMessage('Hello, ' + data.name + '!');
-                $("#gameInfo").show();
-                $("#playerInfo").hide();
+                changeMessage('Hello, ' + data.name + '.  Now you can start a new game.');
+                showGameSetupState();
             });
     });
 
@@ -27,12 +67,12 @@ $(document).ready(function() {
             },
             function(data, status) {
                 myGameKey = data.key;
-                showGameStatus(data.status);
-                $("#gameStatusInfo").show();
-                $("#gameInfo").hide();
+                startGame();
+                showPlayState();
             });
     });
 
+    /*
     $("#findOpenGamesButton").click(function() {
         $.get(serviceUri + 'game/list-open', {},
             function(data, status) {
@@ -40,23 +80,17 @@ $(document).ready(function() {
             });
     });
 
-    $("#joinGameButton").click(function() {
+     function showOpenGames(data) {
+     alert('Not implemented -- should populate open games list.');
+     }
+
+     $("#joinGameButton").click(function() {
         alert('not implemented');
     });
+     */
 
     $("#startGameButton").click(function() {
-        $.ajax({
-            url: serviceUri + 'game/' + myGameKey + '/play',
-            type: 'PUT',
-            error: function(data) {
-                alert('Something went wrong -- game was not started!!!');
-            },
-            success: function(data) {
-                showGameStatus(data.status);
-                $("#playArea").show();
-                $("#startGameButton").hide();
-            }
-        });
+        startGame();
     });
 
     $("#spinButton").click(function() {
@@ -72,27 +106,40 @@ $(document).ready(function() {
             });
     });
 
+    $("#playAgainButton").click(function() {
+        showGameSetupState();
+    });
+
     function changeMessage(msg) {
         $("#message").text(msg);
     }
 
-    function showOpenGames(data) {
-        alert('Not implemented -- should populate open games list.');
+    function startGame() {
+        $.ajax({
+            url: serviceUri + 'game/' + myGameKey + '/play',
+            type: 'PUT',
+            error: function(data) {
+                changeMessage('Something went wrong -- game was not started!!!');
+            },
+            success: function(data) {
+                $("#playArea").show();
+                $("#startGameButton").hide();
+            }
+        });
     }
 
     function checkGameStatus() {
         $.get(serviceUri + 'game/' + myGameKey, {},
             function(data, status) {
-                showGameStatus(data.status);
+                if (data.status == "Game over") {
+                    showGameOverState();
+                }
             });
-    }
-
-    function showGameStatus(status) {
-        $('#gameStatus').text(status);
     }
 
     function showLatestSpin(spin) {
         $('#latestSpin').attr('src', 'img/' + spin + '.png');
+        $("#latestSpin").show();
     }
 
     function spin() {
@@ -102,9 +149,14 @@ $(document).ready(function() {
             success: function(data, status) {
                 showLatestSpin(data.spinResult);
                 if (data.remove) {
-                    removeFromBasket(data.itemToRemove);
+                    removeFromBlanket(data.itemToActOn);
+                    changeMessage('Sorry, you lost ' + data.itemToActOn + ' because of ' + data.spinResult + '.');
+                } else if (data.wipeout) {
+                    clearBlanket();
+                    changeMessage('Oh no.  Your picnic was wiped out.');
                 } else {
-                    addToBasket(data.spinResult);
+                    placeOnBlanket(data.spinResult);
+                    changeMessage('You got ' + data.spinResult + '.');
                 }
             },
             async: false,
@@ -112,11 +164,11 @@ $(document).ready(function() {
         });
     }
 
-    function addToBasket(item) {
+    function placeOnBlanket(item) {
         $("#picnicItems").append( '<img class="itemOnBlanket" src="img/' + item + '.png" width="90" name="' + item + '"/>' );
     }
 
-    function removeFromBasket(item) {
+    function removeFromBlanket(item) {
         var items = $("#picnicItems img");
         items.each(function() {
             if ($(this).attr('name') == item) {
@@ -127,11 +179,7 @@ $(document).ready(function() {
         });
     }
 
-    function resetView() {
-        $("#gameInfo").hide();
-        $("#gameStatusInfo").hide();
-        $("#startGameButton").show();
-        $("#playArea").hide();
+    function clearBlanket() {
         $("#picnicItems").empty();
     }
 });

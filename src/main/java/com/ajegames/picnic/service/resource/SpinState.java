@@ -9,8 +9,9 @@ public class SpinState {
 
   private String spinToken;
   private String spinResult;
-  private String itemToRemove;
+  private String itemToActOn;
   private boolean remove;
+  private boolean wipeout;
 
   private SpinState() {
   }
@@ -25,7 +26,8 @@ public class SpinState {
     SpinState out = new SpinState();
     out.spinResult = result.getSpinResult().getValue();
     out.remove = TurnAction.REMOVE.equals(result.getWhatToDo());
-    out.itemToRemove = result.getWhatToActOn().getValue();
+    out.itemToActOn = result.getWhatToActOn().getValue();
+    out.wipeout = TurnAction.WIPEOUT.equals(result.getWhatToDo());
     return out;
   }
 
@@ -37,11 +39,15 @@ public class SpinState {
     return spinResult;
   }
 
-  public String getItemToRemove() {
-    return itemToRemove;
+  public String getItemToActOn() {
+    return itemToActOn;
   }
 
   public boolean isRemove() {
     return remove;
+  }
+
+  public boolean isWipeout() {
+    return wipeout;
   }
 }

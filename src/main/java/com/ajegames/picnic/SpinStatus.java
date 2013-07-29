@@ -33,7 +33,7 @@ public class SpinStatus {
   }
 
   public void setToWipeout() {
-    this.whatToActOn = null;
+    this.whatToActOn = Item.NULL_ITEM;
     this.whatToDo = TurnAction.WIPEOUT;
   }
 }
