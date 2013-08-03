@@ -17,7 +17,7 @@ public class PicnicSpinner {
   /**
    * Sets up spinner options with supplied picnic items.
    *
-   * @param items
+   * @param items picnic items to place on the spinner
    */
   synchronized public static void configureSpinner(List<Item> items) {
     if (ready) {
@@ -30,10 +30,14 @@ public class PicnicSpinner {
     ready = true;
   }
 
+  synchronized public static boolean isConfigured() {
+    return ready;
+  }
+
   /**
    * Spawn an instance of a spinner with its own history.
    *
-   * @return
+   * @return PicnicSpinner
    */
   public static PicnicSpinner createInstance() {
     if (!ready) {
@@ -56,4 +60,7 @@ public class PicnicSpinner {
     return selected;
   }
 
+  public boolean hasPicnicItem(Item picnicItem) {
+    return spinner.hasSpinnerOption(picnicItem);
+  }
 }

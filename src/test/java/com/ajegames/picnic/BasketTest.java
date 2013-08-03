@@ -1,26 +1,29 @@
 package com.ajegames.picnic;
 
-import junit.framework.TestCase;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class BasketTest extends TestCase {
+public class BasketTest {
 
+  @Test
   public void testGatherItem() {
     Basket basket = new Basket();
     basket.gatherItem(Item.createFood("peanuts"));
-    assertEquals("expect one item in basket", 1, basket.getItemCount());
+    assert basket.getItemCount() == 1 : "expect one item in basket";
   }
 
+  @Test
   public void testGatherMultipleItems() {
     Basket basket = new Basket();
     basket.gatherItem(Item.createFood("peanuts"));
     basket.gatherItem(Item.createFood("popcorn"));
     basket.gatherItem(Item.createFood("potato chips"));
     basket.gatherItem(Item.createFood("pretzels"));
-    assertEquals("expect one item in basket", 4, basket.getItemCount());
+    assert basket.getItemCount() == 4 : "expect one item in basket";
   }
 
+  @Test
   public void testItemCounts() {
     Basket basket = new Basket();
     basket.gatherItem(Item.createFood("peanuts"));
@@ -29,43 +32,48 @@ public class BasketTest extends TestCase {
     basket.gatherItem(Item.createDrink("fruit juice"));
     basket.gatherItem(Item.createDrink("mai tais"));
     basket.gatherItem(Item.createSupply("napkins"));
-    assertEquals("should have 2 food items", 2, basket.getFoodCount());
-    assertEquals("should have 3 drink items", 3, basket.getDrinkCount());
-    assertEquals("should have 1 supply item", 1, basket.getSupplyCount());
+    assert basket.getFoodCount() == 2 : "should have 2 food items";
+    assert basket.getDrinkCount() == 3 : "should have 3 drink items";
+    assert basket.getSupplyCount() == 1 : "should have 1 supply item";
   }
 
+  @Test
   public void testItemCountsWhenBasketEmpty() {
     Basket basket = new Basket();
-    assertEquals("should have none", 0, basket.getItemCount());
-    assertEquals("should have none", 0, basket.getFoodCount());
-    assertEquals("should have none", 0, basket.getDrinkCount());
-    assertEquals("should have none", 0, basket.getSupplyCount());
+    assert basket.getItemCount() == 0 : "should have none";
+    assert basket.getFoodCount() == 0 : "should have none";
+    assert basket.getDrinkCount() == 0 : "should have none";
+    assert basket.getSupplyCount() == 0 : "should have none";
   }
 
+  @Test
   public void testHasPrevention() {
     Nuisance rain = Nuisance.createWipeOut("rain");
     Prevention umbrella = Prevention.createPrevention("umbrella", rain);
 
     Basket basket = new Basket();
     basket.gatherItem(umbrella);
-    assertTrue("umbrella should prevent rain", basket.hasPrevention(rain));
+    assert basket.hasPrevention(rain) : "umbrella should prevent rain";
   }
 
+  @Test
   public void testHasPreventionWhenPlayerHasNothing() {
     Nuisance rain = Nuisance.createWipeOut("rain");
     Basket basket = new Basket();
-    assertFalse("umbrella should prevent rain", basket.hasPrevention(rain));
+    assert !basket.hasPrevention(rain) : "umbrella should prevent rain";
   }
 
+  @Test
   public void testHasPreventionWhenPlayerDoesNot() {
     Nuisance rain = Nuisance.createWipeOut("rain");
 
     Basket basket = new Basket();
     basket.gatherItem(Item.createDrink("sweet tea"));
     basket.gatherItem(Item.createFood("popcorn"));
-    assertFalse("umbrella should prevent rain", basket.hasPrevention(rain));
+    assert !basket.hasPrevention(rain) : "umbrella should prevent rain";
   }
 
+  @Test
   public void testGetDifferentTypesOfItems() {
     Basket basket = new Basket();
 
@@ -86,21 +94,22 @@ public class BasketTest extends TestCase {
     basket.gatherItem(bugSpray);
 
     List<Item> items = basket.getFoods();
-    assertTrue(items.contains(peanuts));
-    assertTrue(items.contains(popcorn));
+    assert items.contains(peanuts);
+    assert items.contains(popcorn);
 
     items = basket.getDrinks();
-    assertTrue(items.contains(icedTea));
-    assertTrue(items.contains(fruitJuice));
-    assertTrue(items.contains(maiTais));
+    assert items.contains(icedTea);
+    assert items.contains(fruitJuice);
+    assert items.contains(maiTais);
 
     items = basket.getSupplies();
-    assertTrue(items.contains(napkins));
+    assert items.contains(napkins);
 
     items = basket.getPreventions();
-    assertTrue(items.contains(bugSpray));
+    assert items.contains(bugSpray);
   }
 
+  @Test
   public void testRemoveItem() {
     Basket basket = new Basket();
 
@@ -113,23 +122,25 @@ public class BasketTest extends TestCase {
     Item peanutsTwin = Item.createFood("peanuts");
     basket.removeItem(peanutsTwin);
 
-    assertFalse(basket.holdsItem(peanuts));
-    assertTrue(basket.holdsItem(popcorn));
+    assert !basket.holdsItem(peanuts);
+    assert basket.holdsItem(popcorn);
   }
 
+  @Test
   public void testRemoveItemOfType() {
     Basket basket = new Basket();
     basket.gatherItem(Item.createFood("hot dogs"));
     basket.gatherItem(Item.createFood("chicken"));
     basket.gatherItem(Item.createFood("tacos"));
     basket.gatherItem(Item.createFood("pizza"));
-    assertEquals(4, basket.getFoodCount());
+    assert basket.getFoodCount() == 4;
 
     basket.removeItemOfType(ItemType.FOOD);
-    assertEquals(3, basket.getFoodCount());
-    assertEquals(3, basket.getFoods().size());
+    assert basket.getFoodCount() == 3;
+    assert basket.getFoods().size() == 3;
   }
 
+  @Test
   public void testWipeOut() {
     Basket basket = new Basket();
     basket.gatherItem(Item.createFood("hot dogs"));
@@ -138,13 +149,13 @@ public class BasketTest extends TestCase {
     basket.gatherItem(Item.createSupply("forks"));
     basket.gatherItem(Prevention.createPrevention("bug spray", Nuisance.createWipeOut("mosquitos")));
     basket.empty();
-    assertEquals(0, basket.getItemCount());
-    assertEquals(0, basket.getSupplyCount());
-    assertEquals(0, basket.getFoodCount());
-    assertEquals(0, basket.getDrinkCount());
-    assertTrue(basket.getDrinks().isEmpty());
-    assertTrue(basket.getFoods().isEmpty());
-    assertTrue(basket.getSupplies().isEmpty());
-    assertTrue(basket.getPreventions().isEmpty());
+    assert basket.getItemCount() == 0;
+    assert basket.getSupplyCount() == 0;
+    assert basket.getFoodCount() == 0;
+    assert basket.getDrinkCount() == 0;
+    assert basket.getDrinks().isEmpty();
+    assert basket.getFoods().isEmpty();
+    assert basket.getSupplies().isEmpty();
+    assert basket.getPreventions().isEmpty();
   }
 }

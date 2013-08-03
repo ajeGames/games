@@ -33,6 +33,10 @@ public class Spinner {
     return this;
   }
 
+  public boolean hasSpinnerOption(SpinnerOption option) {
+    return options.contains(option);
+  }
+
   synchronized public SpinnerOption spin() {
     int indexOfSelection = (int) Math.floor(randomSource.getRandom() * options.size());
     if (indexOfSelection == options.size()) {

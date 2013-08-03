@@ -21,6 +21,11 @@ public class PicnicSpinnerFactory {
   synchronized public static void configureSpinner(SpinnerConfiguration config) {
     LOG.info("Configuring spinner options...");
 
+    if (PicnicSpinner.isConfigured()) {
+      LOG.warn("Spinner is already configured; aborting this attempt.");
+      return;
+    }
+
     Item toAdd;
     List<Item> spinnerOptions = Lists.newArrayList();
     for (SpinnerItemConfig item : config.getFoods()) {

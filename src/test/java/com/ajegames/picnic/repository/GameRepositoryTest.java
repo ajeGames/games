@@ -2,19 +2,20 @@ package com.ajegames.picnic.repository;
 
 import com.ajegames.picnic.Picnic;
 import com.ajegames.picnic.Player;
-import com.ajegames.picnic.service.PicnicSpinnerFactory;
-import com.ajegames.picnic.service.SpinnerConfiguration;
-import junit.framework.TestCase;
+import com.ajegames.picnic.TestPicnicSpinnerFactory;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class GameRepositoryTest extends TestCase {
+public class GameRepositoryTest {
 
-  @Override
+  @BeforeMethod
   protected void setUp() throws Exception {
-    PicnicSpinnerFactory.configureSpinner(new SpinnerConfiguration());
+    TestPicnicSpinnerFactory.configureSpinnerWithBasicTestItems();
   }
 
+  @Test
   public void testFindOpenGames() {
     Player player1 = PlayerRepository.createPlayer("Bubba");
     Picnic game1 = GameRepository.createGame();
@@ -27,8 +28,8 @@ public class GameRepositoryTest extends TestCase {
     game4.play();
 
     List<Picnic> openGames = GameRepository.findOpenGames();
-    assertEquals(2, openGames.size());
-    assertTrue(openGames.contains(game2));
-    assertTrue(openGames.contains(game3));
+    assert openGames.size() == 2;
+    assert openGames.contains(game2);
+    assert openGames.contains(game3);
   }
 }
