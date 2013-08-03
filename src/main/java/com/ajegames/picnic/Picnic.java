@@ -117,41 +117,37 @@ public class Picnic implements PersistedGameEntity {
     Basket currentBasket = baskets.get(currentPlayer.getKey());
     SpinStatus spinStatus = new SpinStatus();
     Item selectedItem;
-    boolean settled;
-    do {
-      settled = true;  // only exception is when nuisance picked while prevention is held
-      selectedItem = spinner.spin();
-      spinStatus.setSpinResult(selectedItem);
-      LOG.info("Spinner is pointing to " + selectedItem.getDescription());
-      if (!selectedItem.isNuisance()) {
-        currentBasket.gatherItem(selectedItem);
-      } else {
-        Nuisance aProblem = (Nuisance) selectedItem;
-        if (!currentBasket.hasPrevention(aProblem)) {
-          if (aProblem.isAgainstItem()) {
-            currentBasket.removeItem(aProblem.getWorksAgainst());
-            spinStatus.setToRemoveItem(aProblem.getWorksAgainst());
-          } else if (aProblem.isAgainstItemType()) {
-            Item removedItem = currentBasket.removeItemOfType(aProblem.getWorksAgainstType());
-            spinStatus.setToRemoveItem(removedItem);
-          } else if (aProblem.isWipeOut()) {
-            currentBasket.empty();
-            spinStatus.setToWipeout();
-          }
-        } else {
-          LOG.info("Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
-          // TODO make it so player can see that the prevention helped
-          settled = false;
+
+    selectedItem = spinner.spin();
+    spinStatus.setSpinResult(selectedItem);
+    LOG.info("Spinner is pointing to " + selectedItem.getDescription());
+    if (!selectedItem.isNuisance()) {
+      currentBasket.gatherItem(selectedItem);
+    } else {
+      Nuisance aProblem = (Nuisance) selectedItem;
+      if (!currentBasket.hasPrevention(aProblem)) {
+        if (aProblem.isAgainstItem()) {
+          currentBasket.removeItem(aProblem.getWorksAgainst());
+          spinStatus.setToRemoveItem(aProblem.getWorksAgainst());
+        } else if (aProblem.isAgainstItemType()) {
+          Item removedItem = currentBasket.removeItemOfType(aProblem.getWorksAgainstType());
+          spinStatus.setToRemoveItem(removedItem);
+        } else if (aProblem.isWipeOut()) {
+          currentBasket.empty();
+          spinStatus.setToWipeout();
         }
+      } else {
+        LOG.info("Problem avoided because " + currentPlayer.getName() + " has the prevention for " + aProblem.getValue());
+        spinStatus.setSpinAgain();
       }
-    } while (!settled);
+    }
 
     // decide if winner
     if (currentBasket.getFoodCount() >= REQUIRED_FOOD_COUNT
             && currentBasket.getDrinkCount() >= REQUIRED_DRINK_COUNT
             && currentBasket.getSupplyCount() >= REQUIRED_SUPPLY_COUNT) {
       status = PicnicGameStatus.GAME_OVER;
-    } else {
+    } else if (!spinStatus.isSpinAgain()) {
       advanceCurrentPlayer();
     }
     return spinStatus;

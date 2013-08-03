@@ -19,6 +19,16 @@ public class SpinnerResource extends BasePicnicResource {
   private static Logger LOG = LoggerFactory.getLogger(SpinnerResource.class);
   private static Map<String, Picnic> pendingSpins = Maps.newHashMap();
 
+  private String createSpinToken(Picnic game) {
+    String spinToken = KeyGenerator.generateKey(8);
+    pendingSpins.put(spinToken, game);
+    return spinToken;
+  }
+
+  private Picnic consumeSpinToken(String spinToken) {
+    return pendingSpins.remove(spinToken);
+  }
+
   @GET
   @Path("{gameKey}")
   @Produces(MediaType.APPLICATION_JSON)
@@ -34,9 +44,7 @@ public class SpinnerResource extends BasePicnicResource {
     if (!game.isCurrentPlayer(playerKey)) {
       throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
-    String spinToken = KeyGenerator.generateKey(8);
-    pendingSpins.put(spinToken, game);
-    return SpinState.createForToken(spinToken);
+    return SpinState.createForToken(createSpinToken(game));
   }
 
 /*
@@ -53,11 +61,16 @@ public class SpinnerResource extends BasePicnicResource {
   @Timed
   public SpinState spin(@PathParam("spinToken") String spinToken) {
     LOG.info("Invoked spin with spinToken=" + spinToken);
-    Picnic game = pendingSpins.remove(spinToken);
+    Picnic game = consumeSpinToken(spinToken);
     if (game == null) {
       throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
     SpinStatus result = game.takeTurn();
-    return SpinState.createForSpin(result);
+    SpinState state = SpinState.createForSpin(result);
+    if (result.isSpinAgain()) {
+      state.setSpinToken(createSpinToken(game));
+    }
+    return state;
   }
+
 }

@@ -150,12 +150,18 @@ $(document).ready(function() {
                 showLatestSpin(data.spinResult);
                 if (data.remove) {
                     removeFromBlanket(data.itemToActOn);
-                    changeMessage('Sorry, you lost ' + data.itemToActOn + ' because of ' + data.spinResult + '.');
+                    if (data.itemToActOn != null) {
+                        changeMessage('Sorry, you lost ' + data.itemToActOn + ' because of ' + data.spinResult + '.');
+                    } else {
+                        changeMessage('Hmmm, you got ' + data.spinResult + ".  Oh well.");
+                    }
                 } else if (data.wipeout) {
                     clearBlanket();
                     changeMessage('Oh no.  Your picnic was wiped out.');
                 } else {
-                    placeOnBlanket(data.spinResult);
+                    if (!data.spinAgain) {
+                        placeOnBlanket(data.spinResult);
+                    }
                     changeMessage('You got ' + data.spinResult + '.');
                 }
             },

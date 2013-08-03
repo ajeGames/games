@@ -35,6 +35,10 @@ public class SpinState {
     return spinToken;
   }
 
+  public void setSpinToken(String spinToken) {
+    this.spinToken = spinToken;
+  }
+
   public String getSpinResult() {
     return spinResult;
   }
