@@ -11,7 +11,7 @@ import java.util.List;
 public class GameRepositoryTest {
 
   @BeforeMethod
-  protected void setUp() throws Exception {
+  protected void init() throws Exception {
     TestPicnicSpinnerFactory.configureSpinnerWithBasicTestItems();
   }
 

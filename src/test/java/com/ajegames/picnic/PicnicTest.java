@@ -1,13 +1,10 @@
 package com.ajegames.picnic;
 
-import com.ajegames.picnic.service.PicnicSpinnerFactory;
-import junit.framework.TestCase;
+import org.testng.annotations.Test;
 
-/**
- * Created by dave on 7/6/13 at 4:33 PM.
- */
-public class PicnicTest extends TestCase {
+public class PicnicTest {
 
+  @Test
   public void testCreatePicnic() {
   }
 }

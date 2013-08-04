@@ -1,47 +1,49 @@
 package com.ajegames.picnic;
 
-import junit.framework.TestCase;
 
-/**
- * Make sure Item behaves as expected.
- */
-public class ItemTest extends TestCase {
+import org.testng.annotations.Test;
 
+public class ItemTest {
+
+  @Test
   public void testCreateFood() {
     Item picnicItem = Item.createFood("Hamburgers");
-    assertEquals("should be food", ItemType.FOOD, picnicItem.getType());
-    assertTrue(picnicItem.isFood());
-    assertFalse(picnicItem.isDrink());
-    assertFalse(picnicItem.isSupply());
+    assert ItemType.FOOD.equals(picnicItem.getType()) : "should be food";
+    assert picnicItem.isFood();
+    assert !picnicItem.isDrink();
+    assert !picnicItem.isSupply();
   }
 
+  @Test
   public void testCreateDrink() {
     Item picnicItem;
     picnicItem = Item.createDrink("Soda");
-    assertEquals("should be food", ItemType.DRINK, picnicItem.getType());
-    assertTrue(picnicItem.isDrink());
-    assertFalse(picnicItem.isFood());
-    assertFalse(picnicItem.isSupply());
+    assert ItemType.DRINK.equals(picnicItem.getType()) : "should be food";
+    assert picnicItem.isDrink();
+    assert !picnicItem.isFood();
+    assert !picnicItem.isSupply();
   }
 
+  @Test
   public void testCreateSupply() {
     Item picnicItem;
     picnicItem = Item.createSupply("Forks");
-    assertEquals("should be food", ItemType.SUPPLY, picnicItem.getType());
-    assertTrue(picnicItem.isSupply());
-    assertFalse(picnicItem.isFood());
-    assertFalse(picnicItem.isDrink());
+    assert ItemType.SUPPLY.equals(picnicItem.getType()) : "should be food";
+    assert picnicItem.isSupply();
+    assert !picnicItem.isFood();
+    assert !picnicItem.isDrink();
   }
 
+  @Test
   public void testEquality() {
     Item item1 = Item.createDrink("Dr. Pepper");
     Item item2 = Item.createDrink("Dr. Pepper");
     Item item3 = Item.createDrink("Mr. Pip");
     Item item4 = Item.createFood("Mr. Pip");
 
-    assertEquals(item1, item1);
-    assertEquals(item1, item2);
-    assertFalse("these are not equal", item1.equals(item3));
-    assertFalse("different type", item3.equals(item4));
+    assert item1.equals(item1);
+    assert item1.equals(item2);
+    assert !item1.equals(item3) : "these are not equal";
+    assert !item3.equals(item4) : "different type";
   }
 }

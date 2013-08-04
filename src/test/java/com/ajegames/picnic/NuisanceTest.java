@@ -1,43 +1,45 @@
 package com.ajegames.picnic;
 
-import junit.framework.TestCase;
+import org.testng.annotations.Test;
 
-/**
- * Make sure Nuisance behaves as expected.
- */
-public class NuisanceTest extends TestCase {
+public class NuisanceTest {
 
+  @Test
   public void testCreateNuisance() {
     Nuisance newNuisance = Nuisance.createWipeOut("rain");
-    assertFalse("should be generic", newNuisance.isAgainstItem());
-    assertFalse("should be generic", newNuisance.isAgainstItemType());
+    assert !newNuisance.isAgainstItem() : "should be generic";
+    assert !newNuisance.isAgainstItemType() : "should be generic";
   }
 
+  @Test
   public void testCreateNuisanceAgainstItem() {
     Nuisance newNuisance = Nuisance.createAgainstItem("heat wave", Item.createFood("ice cream"));
-    assertTrue("should be specific", newNuisance.isAgainstItem());
-    assertFalse(newNuisance.isAgainstItemType());
-    assertEquals("should work against ice cream", "ice cream", newNuisance.getWorksAgainst().getValue());
+    assert newNuisance.isAgainstItem() : "should be specific";
+    assert !newNuisance.isAgainstItemType();
+    assert "ice cream".equals(newNuisance.getWorksAgainst().getValue()) : "should work against ice cream";
   }
 
+  @Test
   public void testCreateNuisanceAgainstFood() {
     Nuisance newNuisance = Nuisance.createAgainstFood("ants");
-    assertTrue(newNuisance.isAgainstItemType());
-    assertFalse(newNuisance.isAgainstItem());
-    assertEquals("should work against food", ItemType.FOOD, newNuisance.getWorksAgainstType());
+    assert newNuisance.isAgainstItemType();
+    assert !newNuisance.isAgainstItem();
+    assert ItemType.FOOD.equals(newNuisance.getWorksAgainstType()) : "should work against food";
   }
 
+  @Test
   public void testCreateNuisanceAgainstDrink() {
     Nuisance newNuisance = Nuisance.createAgainstDrink("ants");
-    assertTrue(newNuisance.isAgainstItemType());
-    assertFalse(newNuisance.isAgainstItem());
-    assertEquals("should work against food", ItemType.DRINK, newNuisance.getWorksAgainstType());
+    assert newNuisance.isAgainstItemType();
+    assert !newNuisance.isAgainstItem();
+    assert ItemType.DRINK.equals(newNuisance.getWorksAgainstType()) : "should work against food";
   }
 
+  @Test
   public void testCreateNuisanceAgainstSupply() {
     Nuisance newNuisance = Nuisance.createAgainstSupply("wind");
-    assertTrue(newNuisance.isAgainstItemType());
-    assertFalse(newNuisance.isAgainstItem());
-    assertEquals("should work against food", ItemType.SUPPLY, newNuisance.getWorksAgainstType());
+    assert newNuisance.isAgainstItemType();
+    assert !newNuisance.isAgainstItem();
+    assert ItemType.SUPPLY.equals(newNuisance.getWorksAgainstType()) : "should work against food";
   }
 }

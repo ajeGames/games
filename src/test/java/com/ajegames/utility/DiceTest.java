@@ -4,10 +4,11 @@
 
 package com.ajegames.utility;
 
-import junit.framework.TestCase;
+import org.testng.annotations.Test;
 
-public class DiceTest extends TestCase {
+public class DiceTest {
 
+  @Test
   public void testImpossibleDice() {
     int[] sidesToTry = new int[]{-4, 0, 3};
     for (int sides : sidesToTry) {
@@ -16,35 +17,39 @@ public class DiceTest extends TestCase {
       } catch (Exception e) {
         continue;
       }
-      fail("Allowed die with fewer than minimum number of sides.");
+      assert false;  // should never reach this line
     }
   }
 
+  @Test
   public void testCreateOneDie() {
     Dice myDice = Dice.createSingle(4);
     int value = myDice.getTotal();
     myDice.show();
-    assertEquals("Expected 4 sides", 4, myDice.getMaximum());
-    assertEquals("Expected 1 die", 1, myDice.getMinimum());
-    assertTrue("Return value out of bounds", value > 0 && value < 5);
+    assert myDice.getMaximum() == 4 : "Expected 4 sides";
+    assert myDice.getMinimum() == 1 : "Expected 1 die";
+    assert 0 < value && value < 5 : "Return value out of bounds";
   }
 
+  @Test
   public void testCreateTwoDice() {
     Dice myDice = Dice.createDice(new int[]{6, 6});
     myDice.show();
-    assertEquals("Expected 12 sides", 12, myDice.getMaximum());
+    assert myDice.getMaximum() == 12 : "Expected 12 sides";
   }
 
+  @Test
   public void testGetMinimumGetMaximum() {
     Dice myDice = Dice.createDice(new int[]{4, 5, 6});
-    assertEquals("Expected 3", 3, myDice.getMinimum());
-    assertEquals("Expected 15 sides", 15, myDice.getMaximum());
+    assert myDice.getMinimum() == 3 : "Expected 3";
+    assert myDice.getMaximum() == 15 : "Expected 15 sides";
     myDice.add(10);
-    assertEquals("Expected 4", 4, myDice.getMinimum());
-    assertEquals("Expected 25 sides", 25, myDice.getMaximum());
+    assert myDice.getMinimum() == 4 : "Expected 4";
+    assert myDice.getMaximum() == 25 : "Expected 25 sides";
     myDice.show();
   }
 
+  @Test
   public void testGetTotalOfTop() {
 
     Dice setOfOne = Dice.createDice(new int[]{6});
@@ -54,22 +59,19 @@ public class DiceTest extends TestCase {
 
     // bound to fail if not working properly
     for (int i = 0; i < 100; i++) {
-      assertTrue(setOfOne.roll().getTotalOfTop(1) <= 6);
-      assertTrue(setOfTwo.roll().getTotalOfTop(1) <= 4);
-      assertTrue(setOfFour.roll().getTotalOfTop(2) <= 20);
-      assertTrue(setOfSix.roll().getTotalOfTop(2) <= 12);
+      assert setOfOne.roll().getTotalOfTop(1) <= 6;
+      assert setOfTwo.roll().getTotalOfTop(1) <= 4;
+      assert setOfFour.roll().getTotalOfTop(2) <= 20;
+      assert setOfSix.roll().getTotalOfTop(2) <= 12;
     }
   }
 
+  @Test(expectedExceptions = RuntimeException.class)
   public void testGetTotalOfTopFailsAppropriately() {
-    try {
-      Dice.createDice(new int[]{6}).getTotalOfTop(2);
-    } catch (Exception e) {
-      return;
-    }
-    fail("Supposed to throw if number of dice requested greater than number of dice.");
+    Dice.createDice(new int[]{6}).getTotalOfTop(2);
   }
 
+  @Test
   public void testRandomness() {
     tallyRolls(Dice.createDice(new int[]{4}), 1000);
     tallyRolls(Dice.createDice(new int[]{5}), 1000);

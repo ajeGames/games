@@ -7,8 +7,6 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- */
 public class SpinnerTest {
 
   private static Logger LOG = LoggerFactory.getLogger(SpinnerTest.class);

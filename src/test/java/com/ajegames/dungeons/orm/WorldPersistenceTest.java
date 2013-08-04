@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class WorldPersistenceTest {
 
-  @Test(expectedExceptions = IOException.class)
+  @Test
   public void testStoreWorld() throws Exception {
     Player player = Player.createNewPlayer("Merlin", "human", "magic-user", 12, 18, 16, 13, 9, 11);
     PlayerCache.getInstance().add(player);
