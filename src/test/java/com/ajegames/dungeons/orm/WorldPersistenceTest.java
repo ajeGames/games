@@ -4,8 +4,6 @@ import com.ajegames.dungeons.world.PlayerCache;
 import com.ajegames.dungeons.world.player.Player;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 public class WorldPersistenceTest {
 
   @Test
