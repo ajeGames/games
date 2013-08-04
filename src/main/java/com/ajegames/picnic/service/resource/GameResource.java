@@ -35,12 +35,13 @@ public class GameResource extends BasePicnicResource {
   @Path("list-open")
   @Produces(MediaType.APPLICATION_JSON)
   @Timed
-  public List<GameState> listOpenGames() {
+  public List<GameSummaryState> listOpenGames() {
     LOG.info("Invoked listOpenGames");
-    List<GameState> games = Lists.newArrayList();
+    List<GameSummaryState> games = Lists.newArrayList();
     for (Picnic game : GameRepository.findOpenGames()) {
-      games.add(new GameState(game));
+      games.add(new GameSummaryState(game));
     }
+    LOG.info("Found " + games.size() + " games in staging.");
     return games;
   }
 
@@ -57,6 +58,7 @@ public class GameResource extends BasePicnicResource {
       throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
     }
     game.addPlayer(player);
+    game.setOrganizer(player);
     return buildGameState(game);
   }
 

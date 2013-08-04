@@ -29,9 +29,9 @@ public class Picnic implements PersistedGameEntity {
   PicnicGameStatus status;
   PicnicSpinner spinner;
   List<Player> players;
+  Player organizer;
   Map<String, Basket> baskets;
   int indexCurrentPlayer;
-  boolean winner;
 
   public static Picnic createInstance(String key) {
     Picnic out = new Picnic();
@@ -63,6 +63,14 @@ public class Picnic implements PersistedGameEntity {
 
   public List<Player> getPlayers() {
     return players;
+  }
+
+  public Player getOrganizer() {
+    return organizer;
+  }
+
+  public void setOrganizer(Player organizer) {
+    this.organizer = organizer;
   }
 
   public Basket getBasket(String playerKey) {

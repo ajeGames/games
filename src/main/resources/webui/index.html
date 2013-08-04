@@ -27,14 +27,14 @@
       <button id="registerPlayerButton">Join the Fun</button></p>
   </div>
   <div id="gameInfo" class="infoSection">
-    <div><button id="newGameButton">New Game</button>
-      <span style="display:none">
-        OR
-        <button id="findOpenGamesButton">Find Open Games</button> Open Games: <select id="gamesToJoin">
-          <option value="0">Choose One</option>
-        </select>
-        <button id="joinGameButton">Join Game</button>
-      </span>
+    <div id="newGameSection">
+      <button id="newGameButton">New Game</button> <button id="startGameButton">Start Game</button>
+    </div>
+    <div id="">
+      <button id="findOpenGamesButton">Find Open Games</button>
+      <div id="gamesToJoin">
+        <p>Game started by: Bubba <button onclick="joinGame('ABCDEFG123456');">Join</button></p>
+      </div>
     </div>
   </div>
   <div id="playArea">

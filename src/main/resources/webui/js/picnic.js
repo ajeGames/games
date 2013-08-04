@@ -23,6 +23,8 @@ $(document).ready(function() {
         // player name should be read-only with option to change player
         changeMessage("Go ahead and start the game.")
         $("#gameInfo").show();
+        $("#newGameButton").show();
+        $("#startGameButton").hide();
         $("#playerInfo").hide();
         $("#playArea").hide();
         clearBlanket();
@@ -67,12 +69,11 @@ $(document).ready(function() {
             },
             function(data, status) {
                 myGameKey = data.key;
-                startGame();
-                showPlayState();
+                $("#startGameButton").show();
+                $("#newGameButton").hide();
             });
     });
 
-    /*
     $("#findOpenGamesButton").click(function() {
         $.get(serviceUri + 'game/list-open', {},
             function(data, status) {
@@ -80,17 +81,30 @@ $(document).ready(function() {
             });
     });
 
-     function showOpenGames(data) {
-     alert('Not implemented -- should populate open games list.');
-     }
+    function showOpenGames(data) {
+        var gameList = $("#gamesToJoin");
+        gameList.empty();
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
 
-     $("#joinGameButton").click(function() {
+            // FIXME -- need to figure out how to use on and delegate to bind event handler to dynamically created button
+
+            var joinButton = $('<button>Join</button>').click(function () {
+                joinGame(item.gameKey);
+            });
+            var info = '<p>Game started by: ' + item.organizer + ' <button onclick="joinGame(\'' + item.gameKey
+                + '\');">Join</button></p>';
+            gameList.append(info);
+        }
+    }
+
+    $("#joinGameButton").click(function() {
         alert('not implemented');
     });
-     */
 
     $("#startGameButton").click(function() {
         startGame();
+        showPlayState();
     });
 
     $("#spinButton").click(function() {
@@ -112,6 +126,10 @@ $(document).ready(function() {
 
     function changeMessage(msg) {
         $("#message").text(msg);
+    }
+
+    function joinGame(gameKey) {
+        changeMessage("Joining game " + gameKey);
     }
 
     function startGame() {
