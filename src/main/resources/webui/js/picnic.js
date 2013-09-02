@@ -15,6 +15,7 @@ $(document).ready(function() {
         $("#playerName").focus();
         $("#gameInfo").hide();
         $("#playArea").hide();
+        $("#gamesToJoin").hide();
         clearBlanket();
     }
 
@@ -24,6 +25,7 @@ $(document).ready(function() {
         changeMessage("Go ahead and start the game.")
         $("#gameInfo").show();
         $("#newGameButton").show();
+        $("#gamesToJoin").show();
         $("#startGameButton").hide();
         $("#playerInfo").hide();
         $("#playArea").hide();
