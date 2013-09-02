@@ -1,7 +1,7 @@
 package com.ajegames.picnic.service.resource;
 
-import com.ajegames.picnic.Picnic;
-import com.ajegames.picnic.Player;
+import com.ajegames.picnic.domain.Picnic;
+import com.ajegames.picnic.domain.Player;
 import com.ajegames.picnic.repository.GameRepository;
 import com.ajegames.picnic.repository.PlayerRepository;
 

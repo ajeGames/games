@@ -1,8 +1,8 @@
 package com.ajegames.picnic.repository;
 
-import com.ajegames.picnic.Picnic;
-import com.ajegames.picnic.Player;
-import com.ajegames.picnic.TestPicnicSpinnerFactory;
+import com.ajegames.picnic.domain.Picnic;
+import com.ajegames.picnic.domain.Player;
+import com.ajegames.picnic.domain.TestPicnicSpinnerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

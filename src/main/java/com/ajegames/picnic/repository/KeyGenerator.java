@@ -1,6 +1,6 @@
 package com.ajegames.picnic.repository;
 
-import com.ajegames.utility.GameDie;
+import com.ajegames.utility.fate.GameDie;
 
 public class KeyGenerator {
 

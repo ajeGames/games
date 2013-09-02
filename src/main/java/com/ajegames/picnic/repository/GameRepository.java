@@ -1,6 +1,6 @@
 package com.ajegames.picnic.repository;
 
-import com.ajegames.picnic.Picnic;
+import com.ajegames.picnic.domain.Picnic;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

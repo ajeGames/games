@@ -1,6 +1,6 @@
 package com.ajegames.picnic.service.resource;
 
-import com.ajegames.picnic.Picnic;
+import com.ajegames.picnic.domain.Picnic;
 
 public class GameSummaryState {
 
