@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 public abstract class PicnicRepresentation {
-  public static final String RELATIONS_URI = "http://picnic.ajegames.com/relations";
+  public static final String RELATIONS_URI = "http://picnic.ajegames.com/relations/";
   public static final String PICNIC_MEDIA_TYPE = "application/vnd.picnic+json";
 
   protected List<ResourceLink> links;
@@ -18,5 +18,7 @@ public abstract class PicnicRepresentation {
     links.add(ResourceLink.create(uri, relation, PICNIC_MEDIA_TYPE));
   }
 
-  // TODO finish
+  public List<ResourceLink> getLinks() {
+    return links;
+  }
 }
