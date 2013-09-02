@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ajegames</groupId>
-    <artifactId>games</artifactId>
+    <artifactId>picnic</artifactId>
     <version>0.2-SNAPSHOT</version>
 
     <properties>
@@ -22,6 +22,11 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.flexjson</groupId>
+            <artifactId>flexjson</artifactId>
+            <version>2.1</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
