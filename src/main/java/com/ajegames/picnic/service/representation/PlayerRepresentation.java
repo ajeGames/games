@@ -5,7 +5,7 @@ import com.ajegames.utility.rest.ResourceLink;
 
 import java.util.Arrays;
 
-public class PlayerRepresentation extends PicnicRepresentation {
+public class PlayerRepresentation extends BasePicnicRepresentation {
 
   private Player player;
 
