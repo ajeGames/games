@@ -1,6 +1,6 @@
 package com.ajegames.picnic.service;
 
-import com.ajegames.picnic.health.SpinnerHealthCheck;
+import com.ajegames.picnic.service.health.SpinnerHealthCheck;
 import com.ajegames.picnic.service.resource.GameResource;
 import com.ajegames.picnic.service.resource.PicnicResource;
 import com.ajegames.picnic.service.resource.PlayerResource;

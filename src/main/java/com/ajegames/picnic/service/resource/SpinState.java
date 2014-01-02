@@ -1,7 +1,7 @@
 package com.ajegames.picnic.service.resource;
 
-import com.ajegames.picnic.SpinStatus;
-import com.ajegames.picnic.TurnAction;
+import com.ajegames.picnic.domain.SpinStatus;
+import com.ajegames.picnic.domain.TurnAction;
 
 public class SpinState {
 

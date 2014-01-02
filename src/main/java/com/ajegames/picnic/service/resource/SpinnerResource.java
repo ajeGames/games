@@ -1,7 +1,7 @@
 package com.ajegames.picnic.service.resource;
 
-import com.ajegames.picnic.Picnic;
-import com.ajegames.picnic.SpinStatus;
+import com.ajegames.picnic.domain.Picnic;
+import com.ajegames.picnic.domain.SpinStatus;
 import com.ajegames.picnic.repository.KeyGenerator;
 import com.google.common.collect.Maps;
 import com.yammer.metrics.annotation.Timed;

@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+version='0.2-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.yammer.dropwizard:dropwizard-core:0.6.2'
+    compile 'joda-time:joda-time:2.2'
+    testCompile 'org.testng:testng:6.1.1'
+}
+
+apply plugin: 'application'
+
+mainClassName = 'com.ajegames.picnic.service.PicnicService'
+
+run {
+    args 'server', 'config.yml'
+}

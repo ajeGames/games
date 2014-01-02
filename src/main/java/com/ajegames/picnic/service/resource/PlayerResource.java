@@ -1,9 +1,9 @@
 package com.ajegames.picnic.service.resource;
 
-import com.ajegames.picnic.Player;
+import com.ajegames.picnic.domain.Player;
 import com.ajegames.picnic.repository.PlayerRepository;
+import com.ajegames.picnic.service.activity.CreatePlayerActivity;
 import com.yammer.metrics.annotation.Timed;
-import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,10 +33,10 @@ public class PlayerResource extends BasePicnicResource {
   @POST
   @Timed
   public Player createPlayer(@FormParam("playerName") String name) {
-    LOG.info("Invoked createPlayer with playerName=" + name);
+    LOG.debug("Invoked createPlayer with playerName=" + name);
     if (name == null) {
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
-    return PlayerRepository.createPlayer(name);
+    return new CreatePlayerActivity().create(name);
   }
 }

@@ -1,7 +1,7 @@
 package com.ajegames.picnic.service.resource;
 
-import com.ajegames.picnic.Basket;
-import com.ajegames.picnic.Item;
+import com.ajegames.picnic.domain.Basket;
+import com.ajegames.picnic.domain.Item;
 import com.google.common.collect.Lists;
 
 import java.util.List;
