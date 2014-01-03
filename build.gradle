@@ -1,6 +1,21 @@
 apply plugin: 'java'
+apply plugin: 'fatjar'
+apply plugin: 'application'
 
 version='0.2-SNAPSHOT'
+
+
+mainClassName = 'com.ajegames.picnic.service.PicnicService'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.2-rc1'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -12,6 +27,18 @@ dependencies {
     testCompile 'org.testng:testng:6.1.1'
 }
 
+fatJar {
+    classifier 'fat'
+
+    // We need to add the main class to the manifest, otherwise the JAR won't start.
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+    // We have to exclude signature files from the fat JAR, otherwise we'll get invalid signature file digest errors.
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+}
+
 test {
     useTestNG()
 }
@@ -20,6 +47,4 @@ run {
     args 'server', 'config.yml'
 }
 
-apply plugin: 'application'
-
-mainClassName = 'com.ajegames.picnic.service.PicnicService'
+task stage(dependsOn: ['clean', 'fatJar'])

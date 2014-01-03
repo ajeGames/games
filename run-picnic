@@ -1,1 +1,1 @@
-java com.ajegames.picnic.service.PicnicService -Ddw.http.port=9000 -Ddw.http.adminPort=9001 -cp deploy/games-0.2-SNAPSHOT.jar server config.yml
+java -cp build/libs/games-0.2-SNAPSHOT-fat.jar -Ddw.http.port=9000 -Ddw.http.adminPort=9001 com.ajegames.picnic.service.PicnicService server config.yml
