@@ -45,12 +45,10 @@
     <orderEntry type="library" name="Gradle: joda-time-2.2" level="project" />
     <orderEntry type="library" name="Gradle: jsr305-2.0.1" level="project" />
     <orderEntry type="library" name="Gradle: jul-to-slf4j-1.7.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: junit-3.8.1" level="project" />
     <orderEntry type="library" name="Gradle: log4j-over-slf4j-1.7.4" level="project" />
     <orderEntry type="library" name="Gradle: logback-classic-1.0.10" level="project" />
     <orderEntry type="library" name="Gradle: logback-core-1.0.10" level="project" />
     <orderEntry type="library" name="Gradle: snakeyaml-1.6" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: testng-6.1.1" level="project" />
   </component>
 </module>
 
