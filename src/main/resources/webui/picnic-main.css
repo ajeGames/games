@@ -1,0 +1,41 @@
+body {
+    font: 16px Sans-Serif;
+}
+
+.board {
+    height: 500px;
+}
+.blanket {
+    background: url(img/blanket-square-3.jpg);
+    height: 90%;
+    padding: 0.5em;
+}
+
+.row-label {
+    font-size: 28px;
+    font-weight: bold;
+    background: white;
+}
+
+.row {
+    margin: 1em 0.5em;
+}
+
+.item {
+    width: 100px;
+    height: 100px;
+}
+
+#message {
+    width:95%;
+    text-align:center;
+    background:yellow;
+    margin:0.5em;
+    padding:0.5em;
+    border: 1px solid black;
+}
+
+#controls {
+    margin:0.5em;
+    padding:0.5em;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>The Game of Picnic</title>
+    <link rel="stylesheet" type="text/css" href="picnic-main.css">
+</head>
+<body>
+    <h1>Let's Play Picnic!</h1>
+
+    <!-- shows when player wants to join a game-->
+    <section id="staging">
+
+    </section>
+
+    <!-- shows when player is in the game-->
+    <section id="game-play">
+        <div id="message">This is where you see status.</div>
+        <div id="controls">
+            <form method="POST" action="/picnic/game/123/spin">
+                <input value="Spin" name="spin" type="button"/>
+                <span style="margin-left:5em;">You got: <img  class="item" src="img/clear-pixel.png"/></span>
+            </form>
+        </div>
+        <div class="board">
+            <div class="blanket">
+                <div class="row"><span class="row-label">Food</span>
+                    <img class="item" src="img/chips.png"/>
+                    <img class="item" src="img/fruit.png"/>
+                    <img class="item" src="img/bacon.png"/>
+                    <img class="item" src="img/pizza.png"/>
+                    <img class="item" src="img/icecream.png"/>
+                </div>
+                <div class="row"><span class="row-label">Beverages</span>
+                    <img class="item" src="img/soda.png"/>
+                    <img class="item" src="img/water.png"/>
+                </div>
+                <div class="row"><span class="row-label">Supplies</span>
+                    <img class="item" src="img/napkins.png"/>
+                    <img class="item" src="img/plasticware.png"/>
+                    <img class="item" src="img/umbrella.png"/>
+                    <img class="item" src="img/bugspray.png"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
